@@ -1,0 +1,321 @@
+<!DOCTYPE html>  
+<html lang="en">  
+	<head>  
+	    <meta charset="utf-8">  
+	    <title>template maker test</title>  
+	</head>  
+
+	<style>
+		body {margin: 0; padding: 0; border: 0;}
+
+		/* general styles */
+		#editableArea {
+			position: relative;
+			overflow: hidden;
+			width: 960px;
+			height: 1200px;
+			margin: 0 auto 0 auto;
+			background: #eee;
+			color: #333;
+			font-family: arial;
+		}
+		.zone {
+			position: absolute;
+			padding: 30px;
+			background: #eaeaea33;
+		}
+
+		/* dragging */
+		#movInfo {
+			position: absolute;
+			display: none;
+			right: 0;
+			top: 0;
+		}
+		.highlighted { background: #eaeaea;}
+		.draggable { background: #ddd; }
+		.moving {
+			background: #ddd;
+		}
+			.moving #movInfo {
+				display: block;
+			}
+
+		#hBars {
+			top:0;
+			left:0;
+			position: absolute;
+			z-index: 101;
+			display: none;
+			border-top: dashed 1px #333;
+			border-bottom: dashed 1px #333;
+			width: 100%;
+		}
+			#hBars.moving {
+				background: transparent;
+				display: block;
+			}
+		#vBars {
+			top:0;
+			left:0;
+			position: absolute;
+			z-index: 101;
+			display: none;
+			border-left: dashed 1px #333;
+			border-right: dashed 1px #333;
+			height: 100%;
+		}
+			#vBars.moving {
+				background: transparent;
+				display: block;
+			}
+
+		/* editorGui */
+		#editorGui {
+			position: fixed;
+			right: 15px;
+			top: 25%;
+			font-family: arial;
+		}
+			#addZone, #removeZone {
+				text-decoration: none;
+				display: inline-block;
+				padding: 0 10px 0 10px;
+				line-height: 25px;
+				font-size: 12px;
+				font-weight: bold;
+				background: orange;
+				color: #333;
+			}
+	</style>
+
+	<body>  
+		<div id="editableArea">
+			<div class="zone">
+				<h2>Simple Editor</h2>
+				<p>
+					Click on my elements to edit them, or hold down and drag to move me around.
+				</p>
+				<p>
+					The side menu can be used to increase my size, add or remove new zones. It can also add a background image to theoverall editable area.
+				</p>
+			</div>
+
+		</div><!-- /editableArea -->
+
+		<nav>
+			<form id="editorGui">
+			<fieldset>
+				<p>
+					<label for="addBackground">Background</label>
+					<input id="addBackground" name="addBackground" type="text" class="text" value="./img/test_bg.jpg" />
+				</p>
+				<p>
+					<a id="addZone" href="javascript://void();">Add New Active Zone</a>
+					<a id="removeZone" href="javascript://void();">Remove Active Zone</a>
+				</p>
+			</fieldset>
+			<fieldset>
+				<h3>Active Zone:</h3>
+				<p>
+					<label for="currentWidth">Width</label>
+					<input id="currentWidth" name="currentWidth" type="text" class="text" value="" />
+				</p>
+				<p>
+					<label for="currentHeight">Height</label>
+					<input id="currentHeight" name="currentHeight" type="text" class="text" value="" />
+				</p>
+			</fieldset>
+			</form><!-- /editorGui -->
+
+			<div id="hBars"></div>
+			<div id="vBars"></div>
+			<div id="movInfo"></div>
+		</nav>
+	</body>  
+</html>
+
+
+<script src="jquery-1.8.2.min.js"></script>;
+
+<script>
+	function registerZones(el) {
+		//zones can become draggable, on mouse click
+		$(el).mousedown( function() {
+			//prepare zone (editble, draggable, etc)
+			$(".zone").removeClass("draggable").css("z-index","100").children().attr("contenteditable","false");
+			$(this).addClass("draggable").css("z-index","105").children().attr("contenteditable","true");
+			$(".draggable").draggit(".draggable");
+
+			//prepare guidebars for this zone
+			$(this).parent().append( $("#hBars") );
+		    $(this).parent().append( $("#vBars") );
+			$("#hBars").addClass("moving");
+	        $("#vBars").addClass("moving");
+	        $("#hBars").css("height", $(this).outerHeight() );
+	        $("#hBars").css("top", $(this).position().top );
+	        $("#vBars").css("width", $(this).outerWidth() );
+	        $("#vBars").css("left", $(this).position().left );
+		});
+
+		$(el).mousemove( function() {
+			$(this).prepend( $("#movInfo") );
+			$("#movInfo").html("top:" + $(this).css('top') + " left:" + $(this).css('left') );
+	        $("#hBars").css("height", $(this).outerHeight() );
+	        $("#hBars").css("top", $(this).position().top);
+	        $("#vBars").css("width", $(this).outerWidth() );
+	        $("#vBars").css("left", $(this).position().left );
+	        $(".zone").addClass("highlighted");
+		});
+
+		$(el).mouseup( function() {
+			$(".highlighted").removeClass("highlighted");
+		});
+	}
+
+	registerZones( $(".zone") );
+	
+
+	//
+	// Enhanced dragging function
+	//
+	// Original code from PlugTrade.com - jQuery draggit Function 
+	//  
+	jQuery.fn.draggit = function (el) {
+	    var thisel = this;
+	    var thistarget = $(el);
+	    var oldPosX;
+	    var oldPosY;
+	    var relX;
+	    var relY;
+	    var conW;
+	    var conH;
+
+	    thistarget.css('position','absolute');
+
+	    thisel.bind('mousedown', function(e){
+	        var parentPos = $(el).parent().offset();
+	    	var pos = $(el).position();
+	        //var srcX = parentPos.left;
+	        //var srcY = parentPos.top;
+
+	        conW = $(el).parent().width();
+	        conH = $(el).parent().height();
+
+	        relX = e.pageX - pos.left;
+	        relY = e.pageY - pos.top;
+
+	        ismousedown = true;
+	        $(el).addClass('moving');
+	        
+	        $(el).parent().append( $("#hBars") );
+	        $(el).parent().append( $("#vBars") );
+	    });
+
+	    $(document).bind('mousemove',function(e){ 
+	        if(ismousedown)
+	        {
+	            var parentPos = $(el).parent().offset();
+
+	            var mouseX = e.pageX - parentPos.left;
+	            var mouseY = e.pageY - parentPos.top;
+
+	            if(relX == undefined || relY == undefined) {
+	            	relX = 0;
+	            	relY = 0;
+	            }
+	            var diffX = mouseX; 
+	            var diffY = mouseY;
+
+	            // check if we are beyond parent bounds ...
+	            if(diffX < 10)   diffX = 10;
+	            if(diffY < 10)   diffY = 10;	            
+
+	            $(el).css('left', Math.floor(diffX)-10);
+	            $(el).css('top',  Math.floor(diffY)-10);
+
+		    }
+	    });
+
+	    $(window).bind('mouseup', function(e){
+	        ismousedown = false;
+	        $(el).removeClass('moving');
+
+	        $("#hBars").removeClass("moving");
+	        $("#vBars").removeClass("moving");
+	    });
+
+	    return this;
+	} // end jQuery draggit function //
+
+
+
+//
+// Form Functionality
+//
+$(function () {
+	$("#editorGui input").keypress(function(event) {
+		if (event.which == 13) {
+	        event.preventDefault();
+	        $(this).blur();
+    	}
+	});
+
+	$("#addBackground").blur(function() {
+		$("#editableArea").css("background", "url(" + $(this).val() + ") no-repeat");
+		console.log($(this).val());
+	});
+
+	$("#addZone").click(function() {
+		$("#editableArea").append('<div class="zone"><h2>new zone</h2><p>lipsum orem.</p></div>');
+		$(".zone:last").css("z-index", "106");
+		registerZones($(".zone"));
+	});
+
+	$("#removeZone").click(function() {
+		$(".draggable").remove(); 
+	});
+
+	$("#currentWidth").blur(function() {
+		$(".draggable").css("width", $("#currentWidth").val());
+	});
+
+	$("#currentHeight").blur(function() {
+		$(".draggable").css("height", $("#currentHeight").val());
+	});
+
+	$("#currentHeight").focus(function(){
+		$("#currentHeight").val( $(".draggable").css("height") );
+	});
+
+	$("#currentWidth").focus(function(){
+		$("#currentWidth").val( $(".draggable").css("width") );
+	});
+
+	$(".draggable").mouseup(function(){
+		$("#currentWidth").val( $(".draggable").css("width") );
+		$("#currentHeight").val( $(".draggable").css("height") );
+	});
+});
+
+
+
+//
+// Data storing
+//
+$(function () {
+	//for all savable elements, on blur store thier data
+	$(".persistant").blur(function () {
+		localStorage.setItem('data_' + $(this).attr("id"), this.innerHTML);
+	});
+
+	//load all savable elements from data
+	$(".persistant").each( function(i) {
+		var dataValue = 'data_' + $(this).attr("id");
+		if ( localStorage.getItem( dataValue ) ) {
+			$(this).html( localStorage.getItem( dataValue ) );
+		};
+	});	
+});
+
+</script>
