@@ -2,7 +2,7 @@
 <html lang="en">  
 	<head>  
 	    <meta charset="utf-8">  
-	    <title>template maker test</title>  
+	    <title>simple Overview Tab Generator</title>  
 	</head>  
 
 	<style>
@@ -22,7 +22,6 @@
 		.zone {
 			position: absolute;
 			padding: 30px;
-			background: #eaeaea33;
 		}
 
 		/* dragging */
@@ -32,10 +31,10 @@
 			right: 0;
 			top: 0;
 		}
-		.highlighted { background: #eaeaea;}
-		.draggable { background: #ddd; }
+		.highlighted { background: rgba(200, 200, 200, .8);}
+		.draggable { background: rgba(200, 200, 200, .8); }
 		.moving {
-			background: #ddd;
+			background: rgba(134, 134, 134, .8);
 		}
 			.moving #movInfo {
 				display: block;
@@ -115,7 +114,7 @@
 					<a id="removeZone" href="javascript://void();">Remove Active Zone</a>
 				</p>
 			</fieldset>
-			<fieldset>
+			<fieldset id="guiActiveZone">
 				<h3>Active Zone:</h3>
 				<p>
 					<label for="currentWidth">Width</label>
@@ -140,6 +139,16 @@
 
 <script>
 	function registerZones(el) {
+		//position bars and positional data to element
+		function posBars(el) {
+			$("#movInfo").html("top:" + el.css('top') + " left:" + el.css('left') );
+	        $("#hBars").css("height", el.outerHeight()-2 );
+	        $("#hBars").css("top", el.position().top);
+	        $("#vBars").css("width", el.outerWidth()-2 );
+	        $("#vBars").css("left", el.position().left );
+	        $(".zone").addClass("highlighted");
+		}
+
 		//zones can become draggable, on mouse click
 		$(el).mousedown( function() {
 			//prepare zone (editble, draggable, etc)
@@ -152,24 +161,21 @@
 		    $(this).parent().append( $("#vBars") );
 			$("#hBars").addClass("moving");
 	        $("#vBars").addClass("moving");
-	        $("#hBars").css("height", $(this).outerHeight() );
-	        $("#hBars").css("top", $(this).position().top );
-	        $("#vBars").css("width", $(this).outerWidth() );
-	        $("#vBars").css("left", $(this).position().left );
+	        $(this).prepend( $("#movInfo") );
+	        posBars( $(this) );
 		});
 
 		$(el).mousemove( function() {
-			$(this).prepend( $("#movInfo") );
-			$("#movInfo").html("top:" + $(this).css('top') + " left:" + $(this).css('left') );
-	        $("#hBars").css("height", $(this).outerHeight() );
-	        $("#hBars").css("top", $(this).position().top);
-	        $("#vBars").css("width", $(this).outerWidth() );
-	        $("#vBars").css("left", $(this).position().left );
-	        $(".zone").addClass("highlighted");
+			if(ismousedown){
+		        posBars( $(this) );
+			}
 		});
 
 		$(el).mouseup( function() {
-			$(".highlighted").removeClass("highlighted");
+			$("#editorGui").append( $("#movInfo").empty() );
+			$(".zone").removeClass("highlighted");
+			$("#hBars").removeClass("moving");
+	        $("#vBars").removeClass("moving");
 		});
 	}
 
@@ -240,9 +246,6 @@
 	    $(window).bind('mouseup', function(e){
 	        ismousedown = false;
 	        $(el).removeClass('moving');
-
-	        $("#hBars").removeClass("moving");
-	        $("#vBars").removeClass("moving");
 	    });
 
 	    return this;
@@ -293,8 +296,13 @@ $(function () {
 	});
 
 	$(".draggable").mouseup(function(){
-		$("#currentWidth").val( $(".draggable").css("width") );
-		$("#currentHeight").val( $(".draggable").css("height") );
+		$("#currentWidth").val( $(this).css("width") );
+		$("#currentHeight").val( $(this).css("height") );
+	});
+
+	$(".draggable").mousedown(function() {
+		$("#currentWidth").val( $(this).css("width") );
+		$("#currentHeight").val( $(this).css("height") );
 	});
 });
 
