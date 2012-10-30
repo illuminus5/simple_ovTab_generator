@@ -194,52 +194,51 @@
 	    var oldPosY;
 	    var relX;
 	    var relY;
-	    var conW;
-	    var conH;
+	    var outBoundsX
+	    var outBoundsY
 
 	    thistarget.css('position','absolute');
 
 	    thisel.bind('mousedown', function(e){
-	        var parentPos = $(el).parent().offset();
+	        var parentPos = $(el).parent().position();
 	    	var pos = $(el).position();
-	        //var srcX = parentPos.left;
-	        //var srcY = parentPos.top;
+	        var conW = $(el).parent().width();
+	        var conH = $(el).parent().height();
 
-	        conW = $(el).parent().width();
-	        conH = $(el).parent().height();
+	        outBoundsX = parentPos.left + conW - $(el).outerWidth();
+	        outBoundsY = parentPos.top  + conH - $(el).outerHeight();
 
-	        relX = e.pageX - pos.left;
-	        relY = e.pageY - pos.top;
+	        relX = e.pageX;
+	        relY = e.pageY;
+
+	       	oldPosX = pos.left;
+	    	oldPosY = pos.top;
 
 	        ismousedown = true;
 	        $(el).addClass('moving');
-	        
-	        $(el).parent().append( $("#hBars") );
-	        $(el).parent().append( $("#vBars") );
 	    });
 
 	    $(document).bind('mousemove',function(e){ 
 	        if(ismousedown)
 	        {
-	            var parentPos = $(el).parent().offset();
+	            var parentPos = $(el).parent().position();
 
-	            var mouseX = e.pageX - parentPos.left;
-	            var mouseY = e.pageY - parentPos.top;
+	            var mouseX = e.pageX;
+	            var mouseY = e.pageY;
 
-	            if(relX == undefined || relY == undefined) {
-	            	relX = 0;
-	            	relY = 0;
+	            if(relX != undefined || relY != undefined || oldPosX != undefined || oldPosY != undefined) {
+	            	var diffX =  mouseX - relX  + oldPosX; 
+		            var diffY =  mouseY - relY  + oldPosY;
+
+		            // check if we are beyond parent bounds if so, limit
+		            if(diffX < 0)   diffX = 0;
+		            if(diffY < 0)   diffY = 0;	
+		            if(diffX > outBoundsX) diffX =  outBoundsX;
+		            if(diffY > outBoundsY) diffY =  outBoundsY;          
+
+		            $(el).css('left', Math.floor(diffX) );
+		            $(el).css('top',  Math.floor(diffY) );
 	            }
-	            var diffX = mouseX; 
-	            var diffY = mouseY;
-
-	            // check if we are beyond parent bounds ...
-	            if(diffX < 10)   diffX = 10;
-	            if(diffY < 10)   diffY = 10;	            
-
-	            $(el).css('left', Math.floor(diffX)-10);
-	            $(el).css('top',  Math.floor(diffY)-10);
-
 		    }
 	    });
 
