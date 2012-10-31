@@ -105,9 +105,18 @@
 		<nav>
 			<form id="editorGui">
 			<fieldset>
+				<h3>Layout Area:</h3>
 				<p>
 					<label for="addBackground">Background</label>
 					<input id="addBackground" name="addBackground" type="text" class="text" value="./img/test_bg.jpg" />
+				</p>
+				<p>
+					<label for="overallHeight">Height</label>
+					<input class="inputCss" id="overallHeight" name="overallHeight" type="text" class="text" value="" data-el="#editableArea" data-css="height"/>
+				</p>
+				<p>
+					<label for="overallPadding">Padding</label>
+					<input class="inputCss" id="overallPadding" name="overallPadding" type="text" class="text" value="" data-el="#editableArea" data-css="padding"/>
 				</p>
 				<p>
 					<a id="addZone" href="javascript://void();">Add New Active Zone</a>
@@ -118,12 +127,24 @@
 				<h3>Active Zone:</h3>
 				<p>
 					<label for="currentWidth">Width</label>
-					<input id="currentWidth" name="currentWidth" type="text" class="text" value="" />
+					<input class="inputCss" id="currentWidth" name="currentWidth" type="text" class="text" value="" data-el=".draggable" data-css="width"/>
 				</p>
 				<p>
 					<label for="currentHeight">Height</label>
-					<input id="currentHeight" name="currentHeight" type="text" class="text" value="" />
+					<input class="inputCss" id="currentHeight" name="currentHeight" type="text" class="text" value="" data-el=".draggable" data-css="height"/>
 				</p>
+
+				<p>
+					<label for="currentHeight">Padding</label>
+					<input class="inputCss" id="currentPadding" name="currentPadding" type="text" class="text" value="" data-el=".draggable" data-css="padding"/>
+				</p>
+
+				<!--
+				<p>
+					<label for="currentMargin">Margin</label>
+					<input class="inputCss" id="currentMargin" name="currentMargin" type="text" class="text" value="" data-el=".draggable" data-css="margin"/>
+				</p>
+				-->
 			</fieldset>
 			</form><!-- /editorGui -->
 
@@ -194,8 +215,12 @@
 	    var oldPosY;
 	    var relX;
 	    var relY;
-	    var outBoundsX
-	    var outBoundsY
+	    var outBoundsX;
+	    var outBoundsY;
+	    var padTop;
+        var padRight;
+        var padBottom;
+        var padLeft;
 
 	    thistarget.css('position','absolute');
 
@@ -204,6 +229,11 @@
 	    	var pos = $(el).position();
 	        var conW = $(el).parent().width();
 	        var conH = $(el).parent().height();
+
+	        padTop = parseInt( $(el).parent().css("padding-top").replace("px", "") );
+            padRight = parseInt( $(el).parent().css("padding-right").replace("px", "") );
+            padBottom = parseInt( $(el).parent().css("padding-bottom").replace("px", "") );
+            padLeft = parseInt( $(el).parent().css("padding-left").replace("px", "") );
 
 	        outBoundsX = parentPos.left + conW - $(el).outerWidth();
 	        outBoundsY = parentPos.top  + conH - $(el).outerHeight();
@@ -231,10 +261,10 @@
 		            var diffY =  mouseY - relY  + oldPosY;
 
 		            // check if we are beyond parent bounds if so, limit
-		            if(diffX < 0)   diffX = 0;
-		            if(diffY < 0)   diffY = 0;	
-		            if(diffX > outBoundsX) diffX =  outBoundsX;
-		            if(diffY > outBoundsY) diffY =  outBoundsY;          
+		            if(diffX < 0 + padLeft)   diffX = 0 + padLeft;
+		            if(diffY < 0 + padTop)   diffY = 0 + padTop;
+		            if(diffX > outBoundsX + padRight ) diffX =  outBoundsX + padRight; 
+		            if(diffY > outBoundsY + padBottom ) diffY =  outBoundsY + padBottom;          
 
 		            $(el).css('left', Math.floor(diffX) );
 		            $(el).css('top',  Math.floor(diffY) );
@@ -256,6 +286,7 @@
 // Form Functionality
 //
 $(function () {
+	//return key should activate all inout fields
 	$("#editorGui input").keypress(function(event) {
 		if (event.which == 13) {
 	        event.preventDefault();
@@ -263,9 +294,25 @@ $(function () {
     	}
 	});
 
+	//generic functions to allow css attributes to be tied to input fields
+	$(".inputCss").focus(function(){
+		var targetCss = $(this).attr("data-css");
+		var targetEl  = $(this).attr("data-el");
+		$(this).val( $(targetEl).css( targetCss ) );
+	});
+	$(".inputCss").blur(function() {
+		var targetCss = $(this).attr("data-css");
+		var targetEl  = $(this).attr("data-el");
+		$(targetEl).css( targetCss, $(this).val() );
+	});
+
+	//extra function to always cap the editable area to 960px
+	$("#overallPadding").blur(function() {
+		$("#editableArea").outerWidth(960);
+	});
+
 	$("#addBackground").blur(function() {
 		$("#editableArea").css("background", "url(" + $(this).val() + ") no-repeat");
-		console.log($(this).val());
 	});
 
 	$("#addZone").click(function() {
@@ -276,32 +323,6 @@ $(function () {
 
 	$("#removeZone").click(function() {
 		$(".draggable").remove(); 
-	});
-
-	$("#currentWidth").blur(function() {
-		$(".draggable").css("width", $("#currentWidth").val());
-	});
-
-	$("#currentHeight").blur(function() {
-		$(".draggable").css("height", $("#currentHeight").val());
-	});
-
-	$("#currentHeight").focus(function(){
-		$("#currentHeight").val( $(".draggable").css("height") );
-	});
-
-	$("#currentWidth").focus(function(){
-		$("#currentWidth").val( $(".draggable").css("width") );
-	});
-
-	$(".draggable").mouseup(function(){
-		$("#currentWidth").val( $(this).css("width") );
-		$("#currentHeight").val( $(this).css("height") );
-	});
-
-	$(".draggable").mousedown(function() {
-		$("#currentWidth").val( $(this).css("width") );
-		$("#currentHeight").val( $(this).css("height") );
 	});
 });
 
