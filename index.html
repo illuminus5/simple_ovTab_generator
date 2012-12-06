@@ -3,7 +3,7 @@
 	<head>
 	    <meta charset="utf-8">
 	    <title>Simple Overview Tab Generator</title>
-		<link rel="stylesheet" href="/css/ovTabGen.css"/>
+		<link rel="stylesheet" href="./css/ovTabGen.css"/>
 	</head>
 
 	<body>
@@ -45,16 +45,16 @@
 				<h3>Active Zone:</h3>
 				<p>
 					<label for="currentWidth">Width</label>
-					<input class="inputCss" id="currentWidth" name="currentWidth" type="text" class="text" value="" data-el=".draggable" data-css="width"/>
+					<input class="inputCss" id="currentWidth" name="currentWidth" type="text" class="text" value="" data-el=".zone.moving" data-css="width"/>
 				</p>
 				<p>
 					<label for="currentHeight">Height</label>
-					<input class="inputCss" id="currentHeight" name="currentHeight" type="text" class="text" value="" data-el=".draggable" data-css="height"/>
+					<input class="inputCss" id="currentHeight" name="currentHeight" type="text" class="text" value="" data-el=".zone.moving" data-css="height"/>
 				</p>
 
 				<p>
 					<label for="currentHeight">Padding</label>
-					<input class="inputCss" id="currentPadding" name="currentPadding" type="text" class="text" value="" data-el=".draggable" data-css="padding"/>
+					<input class="inputCss" id="currentPadding" name="currentPadding" type="text" class="text" value="" data-el=".zone.moving" data-css="padding"/>
 				</p>
 
 				<!--
@@ -74,9 +74,38 @@
 </html>
 
 
-<script src="/js/jquery-1.8.2.min.js"></script>;
+<script src="./js/jquery-1.8.2.min.js"></script>;
 
 <script>
+	//
+	// UGLY globals (for now)
+	//
+	var ctlDown = false;
+	var ismousedown = false;
+	var lowestPoint = 0;
+
+
+	//track alt down
+	$(document).keydown(function(event) {
+		if (event.which == 18) {
+			if (ctlDown == false) ctlDown = true;
+			$(".zone").addClass("highlighted");
+			$(".zone").removeClass("moving");
+			$("#guiActiveZone").hide();
+		}
+	});
+	$(document).keyup(function(event) {
+		if (event.which == 18) {
+			if (ctlDown == true) ctlDown = false;
+			$(".zone").removeClass("highlighted");
+		}
+	});
+
+
+
+	//
+	// make targeted zone active, track/update gui objects around it.
+	//
 	function registerZones(el) {
 		//position bars and positional data to element
 		function posBars(el) {
@@ -85,47 +114,57 @@
 	        $("#hBars").css("top", el.position().top);
 	        $("#vBars").css("width", el.outerWidth()-2 );
 	        $("#vBars").css("left", el.position().left );
-	        $(".zone").addClass("highlighted");
 		}
 
 		//zones can become draggable, on mouse click
 		$(el).mousedown( function() {
-			//prepare zone (editble, draggable, etc)
-			$(".zone").removeClass("draggable").css("z-index","100").children().attr("contenteditable","false");
-			$(this).addClass("draggable").css("z-index","105").children().attr("contenteditable","true");
-			$(".draggable").draggit(".draggable");
+			if(ctlDown) {
+				//prepare zone (editble, draggable, etc)
+				$(".zone").removeClass("moving");
+				$(".zone").removeClass("draggable").css("z-index","100").children().attr("contenteditable","false");
+				$(this).addClass("draggable").css("z-index","105").children().attr("contenteditable","true");
+				$(".draggable").draggit(".draggable");
+				$("#guiActiveZone").show();
 
-			//prepare guidebars for this zone
-			$(this).parent().append( $("#hBars") );
-		    $(this).parent().append( $("#vBars") );
-			$("#hBars").addClass("moving");
-	        $("#vBars").addClass("moving");
-	        $(this).prepend( $("#movInfo") );
-	        posBars( $(this) );
+				//prepare guidebars for this zone
+				$(".zone").addClass("highlighted");
+				$(this).parent().append( $("#hBars") );
+			    $(this).parent().append( $("#vBars") );
+				$("#hBars").addClass("moving");
+		        $("#vBars").addClass("moving");
+		        $(this).prepend( $("#movInfo") );
+		        posBars( $(this) );
+	    	}
 		});
 
 		$(el).mousemove( function() {
 			if(ismousedown){
 		        posBars( $(this) );
+		        $(".inputCss").focus();
+		        $(".inputCss").blur();
 			}
 		});
 
 		$(el).mouseup( function() {
 			$("#editorGui").append( $("#movInfo").empty() );
+			$(".zone").removeClass("draggable").css("z-index","100");//.children().attr("contenteditable","false");
 			$(".zone").removeClass("highlighted");
+			//$(".zone").removeClass("moving");
 			$("#hBars").removeClass("moving");
 	        $("#vBars").removeClass("moving");
 		});
 	}
-
 	registerZones( $(".zone") );
 
+
+
+	
 
 	//
 	// Enhanced dragging function
 	//
-	// Original code from PlugTrade.com - jQuery draggit Function
-	//
+	// Original code from PlugTrade.com - jQuery draggit Function 
+	//  
 	jQuery.fn.draggit = function (el) {
 	    var thisel = this;
 	    var thistarget = $(el);
@@ -143,6 +182,7 @@
 	    thistarget.css('position','absolute');
 
 	    thisel.bind('mousedown', function(e){
+	    	/*
 	        var parentPos = $(el).parent().position();
 	    	var pos = $(el).position();
 	        var conW = $(el).parent().width();
@@ -163,10 +203,36 @@
 	    	oldPosY = pos.top;
 
 	        ismousedown = true;
-	        $(el).addClass('moving');
+	        $(el).addClass('moving');*/
+	        setMove(e);
 	    });
 
-	    $(document).bind('mousemove',function(e){
+	    function setMove(e) {
+	    	var parentPos = $(el).parent().position();
+	    	var pos = $(el).position();
+	        var conW = $(el).parent().width();
+	        var conH = $(el).parent().height();
+
+	        padTop = parseInt( $(el).parent().css("padding-top").replace("px", "") );
+            padRight = parseInt( $(el).parent().css("padding-right").replace("px", "") );
+            padBottom = parseInt( $(el).parent().css("padding-bottom").replace("px", "") );
+            padLeft = parseInt( $(el).parent().css("padding-left").replace("px", "") );
+
+	        outBoundsX = parentPos.left + conW - $(el).outerWidth();
+	        outBoundsY = parentPos.top  + conH - $(el).outerHeight();
+
+	        relX = e.pageX;
+	        relY = e.pageY;
+
+	       	oldPosX = pos.left;
+	    	oldPosY = pos.top;
+
+	        ismousedown = true;
+	        $(el).addClass('moving');
+	    }
+	    setMove(el);
+
+	    $(document).bind('mousemove',function(e){ 
 	        if(ismousedown)
 	        {
 	            var parentPos = $(el).parent().position();
@@ -175,14 +241,14 @@
 	            var mouseY = e.pageY;
 
 	            if(relX != undefined || relY != undefined || oldPosX != undefined || oldPosY != undefined) {
-	            	var diffX =  mouseX - relX  + oldPosX;
+	            	var diffX =  mouseX - relX  + oldPosX; 
 		            var diffY =  mouseY - relY  + oldPosY;
 
 		            // check if we are beyond parent bounds if so, limit
 		            if(diffX < 0 + padLeft)   diffX = 0 + padLeft;
 		            if(diffY < 0 + padTop)   diffY = 0 + padTop;
-		            if(diffX > outBoundsX + padRight ) diffX =  outBoundsX + padRight;
-		            if(diffY > outBoundsY + padBottom ) diffY =  outBoundsY + padBottom;
+		            if(diffX > outBoundsX + padRight ) diffX =  outBoundsX + padRight; 
+		            if(diffY > outBoundsY + padBottom ) diffY =  outBoundsY + padBottom;          
 
 		            $(el).css('left', Math.floor(diffX) );
 		            $(el).css('top',  Math.floor(diffY) );
@@ -236,11 +302,12 @@ $(function () {
 	$("#addZone").click(function() {
 		$("#editableArea").append('<div class="zone"><h2>new zone</h2><p>lipsum orem.</p></div>');
 		$(".zone:last").css("z-index", "106");
+
 		registerZones($(".zone"));
 	});
 
 	$("#removeZone").click(function() {
-		$(".draggable").remove();
+		$(".zone.moving").remove(); 
 	});
 });
 
