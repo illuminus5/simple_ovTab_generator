@@ -1,9 +1,9 @@
-<!DOCTYPE html>  
-<html lang="en">  
-	<head>  
-	    <meta charset="utf-8">  
-	    <title>simple Overview Tab Generator</title>  
-	</head>  
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="utf-8">
+	    <title>Simple Overview Tab Generator</title>
+	</head>
 
 	<style>
 		body {margin: 0; padding: 0; border: 0;}
@@ -88,7 +88,7 @@
 			}
 	</style>
 
-	<body>  
+	<body>
 		<div id="editableArea">
 			<div class="zone">
 				<h2>Simple Editor</h2>
@@ -152,7 +152,7 @@
 			<div id="vBars"></div>
 			<div id="movInfo"></div>
 		</nav>
-	</body>  
+	</body>
 </html>
 
 
@@ -201,13 +201,13 @@
 	}
 
 	registerZones( $(".zone") );
-	
+
 
 	//
 	// Enhanced dragging function
 	//
-	// Original code from PlugTrade.com - jQuery draggit Function 
-	//  
+	// Original code from PlugTrade.com - jQuery draggit Function
+	//
 	jQuery.fn.draggit = function (el) {
 	    var thisel = this;
 	    var thistarget = $(el);
@@ -248,7 +248,7 @@
 	        $(el).addClass('moving');
 	    });
 
-	    $(document).bind('mousemove',function(e){ 
+	    $(document).bind('mousemove',function(e){
 	        if(ismousedown)
 	        {
 	            var parentPos = $(el).parent().position();
@@ -257,14 +257,14 @@
 	            var mouseY = e.pageY;
 
 	            if(relX != undefined || relY != undefined || oldPosX != undefined || oldPosY != undefined) {
-	            	var diffX =  mouseX - relX  + oldPosX; 
+	            	var diffX =  mouseX - relX  + oldPosX;
 		            var diffY =  mouseY - relY  + oldPosY;
 
 		            // check if we are beyond parent bounds if so, limit
 		            if(diffX < 0 + padLeft)   diffX = 0 + padLeft;
 		            if(diffY < 0 + padTop)   diffY = 0 + padTop;
-		            if(diffX > outBoundsX + padRight ) diffX =  outBoundsX + padRight; 
-		            if(diffY > outBoundsY + padBottom ) diffY =  outBoundsY + padBottom;          
+		            if(diffX > outBoundsX + padRight ) diffX =  outBoundsX + padRight;
+		            if(diffY > outBoundsY + padBottom ) diffY =  outBoundsY + padBottom;
 
 		            $(el).css('left', Math.floor(diffX) );
 		            $(el).css('top',  Math.floor(diffY) );
@@ -322,7 +322,7 @@ $(function () {
 	});
 
 	$("#removeZone").click(function() {
-		$(".draggable").remove(); 
+		$(".draggable").remove();
 	});
 });
 
@@ -343,7 +343,7 @@ $(function () {
 		if ( localStorage.getItem( dataValue ) ) {
 			$(this).html( localStorage.getItem( dataValue ) );
 		};
-	});	
+	});
 });
 
 </script>
