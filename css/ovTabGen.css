@@ -1,0 +1,80 @@
+body {margin: 0; padding: 0; border: 0;}
+
+/* general styles */
+#editableArea {
+	position: relative;
+	overflow: hidden;
+	width: 960px;
+	height: 1200px;
+	margin: 0 auto 0 auto;
+	background: #eee;
+	color: #333;
+	font-family: arial;
+}
+.zone {
+	position: absolute;
+	padding: 30px;
+}
+
+/* dragging */
+#movInfo {
+	position: absolute;
+	display: none;
+	right: 0;
+	top: 0;
+}
+.highlighted { background: rgba(200, 200, 200, .8);}
+.draggable { background: rgba(200, 200, 200, .8); }
+.moving {
+	background: rgba(134, 134, 134, .8);
+}
+	.moving #movInfo {
+		display: block;
+	}
+
+#hBars {
+	top:0;
+	left:0;
+	position: absolute;
+	z-index: 101;
+	display: none;
+	border-top: dashed 1px #333;
+	border-bottom: dashed 1px #333;
+	width: 100%;
+}
+	#hBars.moving {
+		background: transparent;
+		display: block;
+	}
+#vBars {
+	top:0;
+	left:0;
+	position: absolute;
+	z-index: 101;
+	display: none;
+	border-left: dashed 1px #333;
+	border-right: dashed 1px #333;
+	height: 100%;
+}
+	#vBars.moving {
+		background: transparent;
+		display: block;
+	}
+
+/* editorGui */
+#editorGui {
+	position: fixed;
+	right: 15px;
+	top: 25%;
+	font-family: arial;
+}
+	#addZone, #removeZone {
+		text-decoration: none;
+		display: inline-block;
+		padding: 0 10px 0 10px;
+		line-height: 25px;
+		font-size: 12px;
+		font-weight: bold;
+		background: orange;
+		color: #333;
+	}
