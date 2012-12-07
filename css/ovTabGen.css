@@ -15,23 +15,20 @@ h2, p, a { margin: 0; }
 }
 
 
+#editableArea a {color: #333; text-decoration: none;}
+#editableArea a:hover {color: #44B3E1; text-decoration: none; cursor: pointer;}
+
 #editableArea a.orange {
 	background: url('http://store.sony.com/wcsstore/SonyStyleStorefrontAssetStore/img/ss_global/carat_small.png') no-repeat 0 50%;
-	color: #333;
 	padding: 0 0 0 10px;
-	text-decoration: none;
 }
 #editableArea a.green {
 	background: url('/img/arrowGreen.png') no-repeat 0 50%;
-	color: #333;
 	padding: 0 0 0 10px;
-	text-decoration: none;
 }
 #editableArea a.red {
 	background: url('/img/arrowRed.png') no-repeat 0 50%;
-	color: #333;
 	padding: 0 0 0 10px;
-	text-decoration: none;
 }
 
 .module {
