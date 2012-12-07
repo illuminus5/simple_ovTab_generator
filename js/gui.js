@@ -257,17 +257,57 @@ $(function () {
 		var targetEl = $(this).attr("data-el");
 		$(targetEl).attr( targetSrc, $(this).val() );
 	});
-
-	$(".inputVidSrc").focus(function() {
-		var targetSrc = $(this).attr("data-src");
+// Video Zone
+	$(".inputVidPath").focus(function() {
+		var targetSrc = $(this).attr("data-vidpath");
 		var targetEl = $(this).attr("data-el");
-		$(this).val( $(targetEl).attr("src") );
+		$(this).val( $(targetEl).attr("data-vidpath") );
 	});
 
-	$(".inputVidSrc").blur(function() {
-		var targetSrc = $(this).attr("data-src");
+	$(".inputVidPath").blur(function() {
+		//var targetSrc = $(this).attr("data-vidpath");
 		var targetEl = $(this).attr("data-el");
-		$(targetEl).attr( targetSrc, $(this).val() );
+		$(targetEl).attr("data-vidpath", $(this).val() );
+	});
+	
+	$(".inputVidWidth").focus(function() {
+		var targetSrc = $(this).attr("data-vidwidth");
+		var targetEl = $(this).attr("data-el");
+		$(this).val( $(targetEl).attr("data-vidwidth") );
+	});
+
+	$(".inputVidWidth").blur(function() {
+		//var targetSrc = $(this).attr("data-vidwidth");
+		var targetEl = $(this).attr("data-el");
+		$(targetEl).attr("data-vidwidth", $(this).val() );
+	});
+	
+	$(".inputVidHeight").focus(function() {
+		var targetSrc = $(this).attr("data-vidheight");
+		var targetEl = $(this).attr("data-el");
+		$(this).val( $(targetEl).attr("data-vidheight") );
+	});
+
+	$(".inputVidHeight").blur(function() {
+		//var targetSrc = $(this).attr("data-vidheight");
+		var targetEl = $(this).attr("data-el");
+		$(targetEl).attr( "data-vidheight", $(this).val() );
+	});
+
+	$(".inputVidPlaceHolder").focus(function() {
+		var targetSrc = $(this).attr("data-imgplaceholder");
+		var targetEl = $(this).attr("data-el");
+		$(this).val( $(targetEl).attr("data-imgplaceholder") );
+	});
+
+	$(".inputVidPlaceHolder").blur(function() {
+		var targetSrc = $(this).attr("data-imgplaceholder");
+		var targetEl = $(this).attr("data-el");
+		$(targetEl).attr( "data-imgplaceholder", $(this).val() );
+	});
+
+	$(".inputVidSubmit").click(function(){
+		insertVideoParams($(".zone.moving"));
 	});
 
 	$(".inputArrowColor").focus(function() {
@@ -282,7 +322,7 @@ $(function () {
 		var curClass = $(targetEl).attr("class");
 		$(targetEl).attr( targetSrc, curClass + ' ' + $(this).val() );
 	});
-
+	
 	//extra function to always cap the editable area to 960px
 	$("#overallPadding").blur(function() {
 		$("#editableArea").outerWidth(960);
@@ -323,8 +363,7 @@ $(function () {
 		}
 
 		if (selectedEl == "video") {
-			$("#editableArea").append('<div class="zone"><div class="insertVideo"></div></div>');
-			insertVideoParams();
+			$("#editableArea").append('<div class="zone moving" id="insertVideo" data-vidpath="" data-vidwidth="640" data-vidheight="390" data-imgplaceholder="">TEST</div>');
 			$(".zone:last").css("z-index", "106");
 			$("#guiActiveZone").fadeOut('slow');
 			$("#guiActiveZoneLink").fadeOut('slow');
@@ -362,6 +401,29 @@ $(function () {
 		$(".zone.moving").remove(); 
 	});
 }); //end: form functionality
+
+
+//
+// Set Video Params
+//
+	function insertVideoParams(activeZone) {
+		var vidParams = {
+            allowScriptAccess: "always",
+            scale: "noscale",
+            wmode: "transparent",
+            bgcolor: "#000000",
+            quality: "high",
+            allowFullScreen: "true"
+		};
+		
+        var flashVars = {
+        	movieName: $(activeZone).attr("data-vidpath"),
+           	autoPlay: "false",
+            startNum: "0"
+        };
+        
+        swfobject.embedSWF("http://store.sony.com/wcsstore/SonyStyleStorefrontAssetStore/flashfiles/swfs/video_player_v2.swf", $(activeZone).attr("id"), $(activeZone).attr("data-vidwidth"), $(activeZone).attr("data-vidheight"), "9.0.0", null, flashVars, vidParams);
+	}
 
 
 //
