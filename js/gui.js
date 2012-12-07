@@ -33,6 +33,11 @@ function registerModule(el) {
 	var modID = $(el).attr("id");
 	var modNum = modID.substr(modID.indexOf("module") + 6);
 
+	$(function () {
+		$(".module").removeClass("activeMod");
+		$("#"+ modID).addClass("activeMod");
+	});
+
 	$("#"+ modID).click(function() {
 		$(".module").removeClass("activeMod");
 		currentMod = "#"+ modID;
@@ -162,6 +167,7 @@ jQuery.fn.draggit = function (el) {
     	var pos = $(el).position();
         var conW = $(el).parent().width();
         var conH = $(el).parent().height();
+        var conPos = $(el).parent().position();
 
         padTop = parseInt( $(el).parent().css("padding-top").replace("px", "") );
         padRight = parseInt( $(el).parent().css("padding-right").replace("px", "") );
@@ -169,7 +175,7 @@ jQuery.fn.draggit = function (el) {
         padLeft = parseInt( $(el).parent().css("padding-left").replace("px", "") );
 
         outBoundsX = parentPos.left + conW - $(el).outerWidth();
-        outBoundsY = parentPos.top  + conH - $(el).outerHeight();
+        outBoundsY = parentPos.top  + conH - $(el).outerHeight() - conPos.top;
 
         relX = e.pageX;
         relY = e.pageY;

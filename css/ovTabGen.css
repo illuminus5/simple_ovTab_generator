@@ -36,6 +36,8 @@ h2, p, a { margin: 0; }
 
 .module {
 	border: 1px solid yellow;
+	border-left: none;
+	border-bottom: none;
 	background: none;
 	height: 300px;
 	position: inherit;
@@ -43,7 +45,9 @@ h2, p, a { margin: 0; }
 }
 	.module.activeMod { background: rgba(255,255,0,0.5); }
 	.module .tab {
-		background: rgba(255,255,0,0.5);
+		background: #eee;
+		border: 1px solid yellow;
+		border-right: none;
 		position: absolute;
 		width: 90px;
 		height: 110px;
@@ -51,6 +55,7 @@ h2, p, a { margin: 0; }
 		left: -100px;
 		padding: 10px 0 0 10px;
 	}
+		.module.activeMod .tab { background: rgba(255,255,0,0.5); }
 		.tab h3 { display: block; margin: 0; padding: 0; }
 		.tab input { width: 75px; }
 		.tab .up, .tab .down, .tab .close {
