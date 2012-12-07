@@ -3,7 +3,9 @@
 //
 var ctlDown = false;
 var ismousedown = false;
+var moduleCount = 0;
 var lowestPoint = 0;
+var currentMod = 0;
 
 
 //track alt down
@@ -23,6 +25,50 @@ $(document).keyup(function(event) {
 });
 
 
+//
+// register modules, attaching functionality to thier components
+//
+function registerModule(el) {
+	var tabEl = $(el).children(".tab");
+	var modID = $(el).attr("id");
+	var modNum = modID.substr(modID.indexOf("module") + 6);
+	
+	$("#"+ modID + " .tab .up").click(function() {
+		var moduleNum = $(this).parent().parent().attr("id");
+		var home = "#" + modID;
+		var target = $(home).siblings()[ $(home).index() - 1 ];
+		$(target).before( $(home) );
+	});
+
+	$("#"+ modID + " .tab .down").click(function() {
+		var moduleNum = $(this).parent().parent().attr("id");
+		var home = "#" + modID;
+		var target = $(home).siblings()[ $(home).index() + 0 ];
+		$(target).after( $(home) );
+	});
+
+	$("#" + modID + " .tab .close").click(function() {
+		$("#" + modID).remove();
+	});
+
+	$("#" + modID + " input").keypress(function(event) {
+		if (event.which == 13) {
+	        event.preventDefault();
+	        $(this).blur();
+		}
+	});
+
+	$("#" + modID + " .inputCss").focus(function(){
+		var targetCss = $(this).attr("data-css");
+		var targetEl  = $(this).attr("data-el");
+		$(this).val( $(targetEl).css( targetCss ) );
+	});
+	$("#" + modID + " .inputCss").blur(function() {
+		var targetCss = $(this).attr("data-css");
+		var targetEl  = $(this).attr("data-el");
+		$(targetEl).css( targetCss, $(this).val() );
+	});
+}
 
 //
 // make targeted zone active, track/update gui objects around it.
@@ -68,9 +114,8 @@ function registerZones(el) {
 
 	$(el).mouseup( function() {
 		$("#editorGui").append( $("#movInfo").empty() );
-		$(".zone").removeClass("draggable").css("z-index","100");//.children().attr("contenteditable","false");
+		$(".zone").removeClass("draggable").css("z-index","100");
 		$(".zone").removeClass("highlighted");
-		//$(".zone").removeClass("moving");
 		$("#hBars").removeClass("moving");
         $("#vBars").removeClass("moving");
 	});
@@ -170,7 +215,7 @@ jQuery.fn.draggit = function (el) {
 //
 $(function () {
 	//return key should activate all inout fields
-	$("#editorGui input").keypress(function(event) {
+	$("input").keypress(function(event) {
 		if (event.which == 13) {
 	        event.preventDefault();
 	        $(this).blur();
@@ -247,9 +292,21 @@ $(function () {
 		$("#editableArea").css("background", "url(" + $(this).val() + ") no-repeat");
 	});
 
-	$("#addZone").click(function() {
-		$("#editableArea").append('<div class="zone"><h2>new zone</h2><p>lipsum orem.</p></div>');
+	$("#addModule").click(function() {
+		moduleCount++;
+		var tabTitle = "module" + moduleCount;
+		$("#editableArea").append('<div class="module"><div class="tab"><h3>' + tabTitle + '</h3><input class="inputCss" name="moduleHeight" type="text" class="text" value="" data-el="#'+tabTitle+'" data-css="height"/><a class="up" href="javascript://void();">^</a> <a class="down" href="javascript://void();">v</a> <a class="close" href="javascript://void();">X</a></div><h2 class="zone">New Module</h2><p class="zone" style="top: 100px;">Im in a module!</p></div>');
+		$(".module:last").attr("id", tabTitle);
 		$(".zone:last").css("z-index", "106");
+
+		registerZones($(".zone"));
+		registerModule("#" + tabTitle);
+		currentMod = ("#" + tabTitle);
+	});
+
+	$("#addZone").click(function() {
+		$(currentMod).append('<div class="zone"><h2>new zone</h2><p>lipsum orem.</p></div>');
+		$(currentMod + " .zone:last").css("z-index", "106");
 
 		registerZones($(".zone"));
 	});
