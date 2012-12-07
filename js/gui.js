@@ -32,6 +32,17 @@ function registerModule(el) {
 	var tabEl = $(el).children(".tab");
 	var modID = $(el).attr("id");
 	var modNum = modID.substr(modID.indexOf("module") + 6);
+
+	$(function () {
+		$(".module").removeClass("activeMod");
+		$("#"+ modID).addClass("activeMod");
+	});
+
+	$("#"+ modID).click(function() {
+		$(".module").removeClass("activeMod");
+		currentMod = "#"+ modID;
+		$(this).addClass("activeMod");
+	});
 	
 	$("#"+ modID + " .tab .up").click(function() {
 		var moduleNum = $(this).parent().parent().attr("id");
@@ -156,6 +167,7 @@ jQuery.fn.draggit = function (el) {
     	var pos = $(el).position();
         var conW = $(el).parent().width();
         var conH = $(el).parent().height();
+        var conPos = $(el).parent().position();
 
         padTop = parseInt( $(el).parent().css("padding-top").replace("px", "") );
         padRight = parseInt( $(el).parent().css("padding-right").replace("px", "") );
@@ -163,7 +175,7 @@ jQuery.fn.draggit = function (el) {
         padLeft = parseInt( $(el).parent().css("padding-left").replace("px", "") );
 
         outBoundsX = parentPos.left + conW - $(el).outerWidth();
-        outBoundsY = parentPos.top  + conH - $(el).outerHeight();
+        outBoundsY = parentPos.top  + conH - $(el).outerHeight() - conPos.top;
 
         relX = e.pageX;
         relY = e.pageY;
@@ -322,8 +334,8 @@ $(function () {
 		var selectedEl = $('.zoneType:checked').val();
 		
 		if(selectedEl == "normal") {
-			$("#editableArea").append('<div class="zone"><h2>new zone</h2><p>lipsum orem.</p></div>');
-			$(".zone:last").css("z-index", "106");
+			$(currentMod).append('<div class="zone"><h2>new zone</h2><p>lipsum orem.</p></div>');
+			$(currentMod + " .zone:last").css("z-index", "106");
 			$("#guiActiveZone").fadeIn('slow');
 			$("#guiActiveZoneVideo").fadeOut('slow');
 			$("#guiActiveZoneLink").fadeOut('slow');
@@ -332,30 +344,33 @@ $(function () {
 		if (selectedEl == "video") {
 			$("#editableArea").append('<div class="zone"><div class="insertVideo">Video to be inserted here</div></div>');
 			$(".zone:last").css("z-index", "106");
+			$(currentMod).append('<div class="zone"><div class="insertVideo"></div></div>');
+			insertVideoParams();
+			$(currentMod + " .zone:last").css("z-index", "106");
 			$("#guiActiveZone").fadeOut('slow');
 			$("#guiActiveZoneLink").fadeOut('slow');
 			$("#guiActiveZoneVideo").fadeIn('slow').css('visibility', 'visible');
 		}
 
 		if (selectedEl == "anchor") {
-			$("#editableArea").append('<a class="zone" src="" rel="">Click here to edit link</a>');
-			$(".zone:last").css("z-index", "106");
+			$(currentMod).append('<a class="zone" src="" rel="">Click here to edit link</a>');
+			$(currentMod + " .zone:last").css("z-index", "106");
 			$("#guiActiveZone").fadeOut('slow');
 			$("#guiActiveZoneLink").fadeIn('slow').css('visibility', 'visible');
 			$("#guiActiveZoneVideo").fadeOut('slow');
 		}
 
 		if (selectedEl == "heading") {
-			$("#editableArea").append('<div class="zone"><h2>new zone</h2></div>');
-			$(".zone:last").css("z-index", "106");
+			$(currentMod).append('<div class="zone"><h2>new zone</h2></div>');
+			$(currentMod + " .zone:last").css("z-index", "106");
 			$("#guiActiveZone").fadeIn('slow');
 			$("#guiActiveZoneVideo").fadeOut('slow');
 			$("#guiActiveZoneLink").fadeOut('slow');
 		}
 
 		if (selectedEl == "list") {
-			$("#editableArea").append('<div class="zone"><ul class=""><li>Edit me</li><li>Edit me</li><li>Edit me</li></ul></div>');
-			$(".zone:last").css("z-index", "106");
+			$(currentMod).append('<div class="zone"><ul class=""><li>Edit me</li><li>Edit me</li><li>Edit me</li></ul></div>');
+			$(currentMod + " .zone:last").css("z-index", "106");
 			$("#guiActiveZone").fadeIn('slow');
 			$("#guiActiveZoneLink").fadeOut('slow');
 			$("#guiActiveZoneVideo").fadeOut('slow');
