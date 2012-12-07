@@ -271,16 +271,23 @@ $(function () {
 	});
 
 	$(".inputArrowColor").focus(function() {
-		var targetSrc = $(this).attr("data-src");
-		var targetEl = $(this).attr("data-el");
-		$(this).val( $(targetSrc) );
+		$(this).val("");
+		var targetSrc = $(this).attr("data-src");//class
+		var targetEl = $(this).attr("data-el");//.zone.moving
+		var targetElClasses = $(targetEl).attr('class');
+		var defaultClasses = ['zone','moving','trackImpression'];
+		$(defaultClasses).each(function(index) {
+			if(targetElClasses.indexOf(defaultClasses[index]) > -1) {
+				targetElClasses = targetElClasses.replace(defaultClasses[index], "");
+			}
+		});
+		$(this).val( targetElClasses );
 	});
 
 	$(".inputArrowColor").blur(function() {
-		var targetSrc = $(this).attr("data-src");
-		var targetEl = $(this).attr("data-el");
-		var curClass = $(targetEl).attr("class");
-		$(targetEl).attr( targetSrc, curClass + ' ' + $(this).val() );
+		var targetSrc = $(this).attr("data-src"); //class
+		var targetEl = $(this).attr("data-el"); //.zone.moving
+		$(targetEl).attr( targetSrc, 'zone moving' + ' ' + $(this).val() );
 	});
 
 	//extra function to always cap the editable area to 960px
@@ -323,8 +330,7 @@ $(function () {
 		}
 
 		if (selectedEl == "video") {
-			$("#editableArea").append('<div class="zone"><div class="insertVideo"></div></div>');
-			insertVideoParams();
+			$("#editableArea").append('<div class="zone"><div class="insertVideo">Video to be inserted here</div></div>');
 			$(".zone:last").css("z-index", "106");
 			$("#guiActiveZone").fadeOut('slow');
 			$("#guiActiveZoneLink").fadeOut('slow');
