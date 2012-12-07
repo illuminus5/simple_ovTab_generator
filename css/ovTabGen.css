@@ -11,6 +11,25 @@ body {margin: 0; padding: 0; border: 0;}
 	color: #333;
 	font-family: arial;
 }
+
+#editableArea a.orange {
+	background: url('http://store.sony.com/wcsstore/SonyStyleStorefrontAssetStore/img/ss_global/carat_small.png') no-repeat 0 50%;
+	color: #333;
+	padding: 0 0 0 10px;
+	text-decoration: none;
+}
+#editableArea a.green {
+	background: url('img/arrowGreen.png') no-repeat 0 50%;
+	color: #333;
+	padding: 0 0 0 10px;
+	text-decoration: none;
+}
+#editableArea a.red {
+	background: url('img/arrowRed.png') no-repeat 0 50%;
+	color: #333;
+	padding: 0 0 0 10px;
+	text-decoration: none;
+}
 .zone {
 	position: absolute;
 	padding: 30px;
@@ -65,10 +84,10 @@ body {margin: 0; padding: 0; border: 0;}
 #editorGui {
 	position: fixed;
 	right: 15px;
-	top: 25%;
+	top: 5%;
 	font-family: arial;
 }
-	#addZone, #removeZone {
+	#addZone, #createZone, #removeZone {
 		text-decoration: none;
 		display: inline-block;
 		padding: 0 10px 0 10px;
@@ -78,3 +97,5 @@ body {margin: 0; padding: 0; border: 0;}
 		background: orange;
 		color: #333;
 	}
+#guiActiveZoneLink {visibility: hidden;}
+#guiActiveZoneVideo {visibility: hidden;}

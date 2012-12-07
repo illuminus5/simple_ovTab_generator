@@ -1,6 +1,6 @@
 <?php
 
-require_once('Smarty.class.php');
+require_once('/Users/levimorales/Desktop/WEB DEV/smarty/Smarty.class.php');
 
 date_default_timezone_set('America/Los_Angeles');
 
@@ -30,10 +30,10 @@ class Factory
 		{
 		  self::$smarty_instance = new Smarty();
 
-		  self::$smarty_instance->template_dir  = 'C:\Users\1000081983\Documents\GitHub\simple_ovTab_generator\smarty\templates';
-		  self::$smarty_instance->config_dir    = 'C:\Users\1000081983\Documents\GitHub\simple_ovTab_generator\smarty\configs';
-		  self::$smarty_instance->cache_dir     = 'c:/smarty/templates/cache';
-		  self::$smarty_instance->compile_dir   = 'c:/smarty/templates/templates_c';
+		  self::$smarty_instance->template_dir  = '/Users/levimorales/Desktop/WEB DEV/SANDBOX/templates';
+		  self::$smarty_instance->config_dir    = '/Users/levimorales/Desktop/WEB DEV/SANDBOX/configs';
+		  self::$smarty_instance->cache_dir     = '/Users/levimorales/Desktop/WEB DEV/smarty/cache';
+		  self::$smarty_instance->compile_dir   = '/Users/levimorales/Desktop/WEB DEV/smarty/templates_c';
 		}
 
 			return self::$smarty_instance;

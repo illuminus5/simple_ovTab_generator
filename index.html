@@ -36,6 +36,20 @@
 					<label for="overallPadding">Padding</label>
 					<input class="inputCss" id="overallPadding" name="overallPadding" type="text" class="text" value="" data-el="#editableArea" data-css="padding"/>
 				</p>
+				<h3>Create New Zone</h3>
+				<p id="zoneTypes">
+					<input class="zoneType" id="normal" name="zoneType" type="radio" class="" value="normal"/>
+					<label>Normal</label><br />
+					<input class="zoneType" id="video" name="zoneType" type="radio" class="" value="video"/>
+					<label>Video</label><br />
+					<input class="zoneType" id="anchor" name="zoneType" type="radio" class="" value="anchor"/>
+					<label>Anchor</label><br />
+					<input class="zoneType" id="heading" name="zoneType" type="radio" class="" value="heading"/>
+					<label>Heading</label><br />
+					<input class="zoneType" id="list" name="zoneType" type="radio" class="" value="list"/>
+					<label>Bullet List</label><br /><br />
+					<a id="createZone" href="javascript://void();">Add new zone</a>
+				</p>
 				<p>
 					<a id="addZone" href="javascript://void();">Add New Active Zone</a>
 					<a id="removeZone" href="javascript://void();">Remove Active Zone</a>
@@ -55,6 +69,28 @@
 				<p>
 					<label for="currentHeight">Padding</label>
 					<input class="inputCss" id="currentPadding" name="currentPadding" type="text" class="text" value="" data-el=".zone.moving" data-css="padding"/>
+				</p>
+			</fieldset>
+			<fieldset id="guiActiveZoneLink">
+				<h3>Active Zone - Link:</h3>
+				<p>
+					<label for="rel">rel</label>
+					<input class="inputLinkRel" id="" name="" type="text" class="text" value="" data-el=".zone.moving" data-rel="rel"/>
+				</p>
+				<p>
+					<label for="src">src</label>
+					<input class="inputLinkSrc" id="" name="" type="text" class="text" value="" data-el=".zone.moving" data-src="src"/>
+				</p>
+				<p>
+					<label for="arrowColor">Arrow color</label>
+					<input class="inputArrowColor" id="" name="" type="text" class="text" value="" data-el=".zone.moving" data-src="class"/>
+				</p>
+			</fieldset>
+			<fieldset id="guiActiveZoneVideo">
+				<h3>Active Zone - Video:</h3>
+				<p>
+					<label for="src">src</label>
+					<input class="inputVidSrc" id="" name="" type="text" class="text" value="" data-el=".zone.moving" data-src="src"/>
 				</p>
 			</fieldset>
 			</form><!-- /editorGui -->

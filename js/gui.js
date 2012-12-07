@@ -42,8 +42,8 @@ function registerZones(el) {
 		if(ctlDown) {
 			//prepare zone (editble, draggable, etc)
 			$(".zone").removeClass("moving");
-			$(".zone").removeClass("draggable").css("z-index","100").children().attr("contenteditable","false");
-			$(this).addClass("draggable").css("z-index","105").children().attr("contenteditable","true");
+			$(".zone").removeClass("draggable").css("z-index","100").attr("contenteditable","false");
+			$(this).addClass("draggable").css("z-index","105").attr("contenteditable","true");
 			$(".draggable").draggit(".draggable");
 			$("#guiActiveZone").show();
 
@@ -179,14 +179,63 @@ $(function () {
 
 	//generic functions to allow css attributes to be tied to input fields
 	$(".inputCss").focus(function(){
-		var targetCss = $(this).attr("data-css");
-		var targetEl  = $(this).attr("data-el");
-		$(this).val( $(targetEl).css( targetCss ) );
+		var targetCss = $(this).attr("data-css"); //padding
+		var targetEl  = $(this).attr("data-el");  //.zone.moving
+		$(this).val( $(targetEl).css( targetCss ) ); 
 	});
 	$(".inputCss").blur(function() {
 		var targetCss = $(this).attr("data-css");
 		var targetEl  = $(this).attr("data-el");
 		$(targetEl).css( targetCss, $(this).val() );
+	});
+
+	$(".inputLinkRel").focus(function() {
+		var targetRel = $(this).attr("data-rel");
+		var targetEl = $(this).attr("data-el");
+		$(this).val( $(targetEl).attr("rel") );
+	});
+
+	$(".inputLinkRel").blur(function() {
+		var targetRel = $(this).attr("data-rel");
+		var targetEl = $(this).attr("data-el");
+		$(targetEl).attr( targetRel, $(this).val() );
+	});
+
+	$(".inputLinkSrc").focus(function() {
+		var targetSrc = $(this).attr("data-src");
+		var targetEl = $(this).attr("data-el");
+		$(this).val( $(targetEl).attr("src") );
+	});
+
+	$(".inputLinkSrc").blur(function() {
+		var targetSrc = $(this).attr("data-src");
+		var targetEl = $(this).attr("data-el");
+		$(targetEl).attr( targetSrc, $(this).val() );
+	});
+
+	$(".inputVidSrc").focus(function() {
+		var targetSrc = $(this).attr("data-src");
+		var targetEl = $(this).attr("data-el");
+		$(this).val( $(targetEl).attr("src") );
+	});
+
+	$(".inputVidSrc").blur(function() {
+		var targetSrc = $(this).attr("data-src");
+		var targetEl = $(this).attr("data-el");
+		$(targetEl).attr( targetSrc, $(this).val() );
+	});
+
+	$(".inputArrowColor").focus(function() {
+		var targetSrc = $(this).attr("data-src");
+		var targetEl = $(this).attr("data-el");
+		$(this).val( $(targetSrc) );
+	});
+
+	$(".inputArrowColor").blur(function() {
+		var targetSrc = $(this).attr("data-src");
+		var targetEl = $(this).attr("data-el");
+		var curClass = $(targetEl).attr("class");
+		$(targetEl).attr( targetSrc, curClass + ' ' + $(this).val() );
 	});
 
 	//extra function to always cap the editable area to 960px
@@ -205,10 +254,57 @@ $(function () {
 		registerZones($(".zone"));
 	});
 
+	$("#createZone").click(function() {
+		var selectedEl = $('.zoneType:checked').val();
+		
+		if(selectedEl == "normal") {
+			$("#editableArea").append('<div class="zone"><h2>new zone</h2><p>lipsum orem.</p></div>');
+			$(".zone:last").css("z-index", "106");
+			$("#guiActiveZone").fadeIn('slow');
+			$("#guiActiveZoneVideo").fadeOut('slow');
+			$("#guiActiveZoneLink").fadeOut('slow');
+		}
+
+		if (selectedEl == "video") {
+			$("#editableArea").append('<div class="zone"><div class="insertVideo"></div></div>');
+			insertVideoParams();
+			$(".zone:last").css("z-index", "106");
+			$("#guiActiveZone").fadeOut('slow');
+			$("#guiActiveZoneLink").fadeOut('slow');
+			$("#guiActiveZoneVideo").fadeIn('slow').css('visibility', 'visible');
+		}
+
+		if (selectedEl == "anchor") {
+			$("#editableArea").append('<a class="zone" src="" rel="">Click here to edit link</a>');
+			$(".zone:last").css("z-index", "106");
+			$("#guiActiveZone").fadeOut('slow');
+			$("#guiActiveZoneLink").fadeIn('slow').css('visibility', 'visible');
+			$("#guiActiveZoneVideo").fadeOut('slow');
+		}
+
+		if (selectedEl == "heading") {
+			$("#editableArea").append('<div class="zone"><h2>new zone</h2></div>');
+			$(".zone:last").css("z-index", "106");
+			$("#guiActiveZone").fadeIn('slow');
+			$("#guiActiveZoneVideo").fadeOut('slow');
+			$("#guiActiveZoneLink").fadeOut('slow');
+		}
+
+		if (selectedEl == "list") {
+			$("#editableArea").append('<div class="zone"><ul class=""><li>Edit me</li><li>Edit me</li><li>Edit me</li></ul></div>');
+			$(".zone:last").css("z-index", "106");
+			$("#guiActiveZone").fadeIn('slow');
+			$("#guiActiveZoneLink").fadeOut('slow');
+			$("#guiActiveZoneVideo").fadeOut('slow');
+		}
+
+		registerZones($(".zone"));
+	});
+
 	$("#removeZone").click(function() {
 		$(".zone.moving").remove(); 
 	});
-});
+}); //end: form functionality
 
 
 //
