@@ -81,6 +81,9 @@ function registerModule(el) {
 	});
 }
 
+
+
+
 //
 // make targeted zone active, track/update gui objects around it.
 //
@@ -150,6 +153,15 @@ function registerZones(el) {
 		$(".zone").removeClass("highlighted");
 		$("#hBars").removeClass("moving");
         $("#vBars").removeClass("moving");
+	});
+
+	//allow all content editable elements to self parse thier contents into html
+	$(el).blur( function() {
+		$(this).children().each( function() { $(this).html( $(this).text() ) });
+	});
+
+	$(el).focus( function() {
+		$(this).children().each( function() { $(this).text( $(this).html() ) });
 	});
 }
 registerZones( $(".zone") );
@@ -375,7 +387,7 @@ $(function () {
 	$("#addModule").click(function() {
 		moduleCount++;
 		var tabTitle = "module" + moduleCount;
-		$("#editableArea").append('<div class="module"><div class="tab"><h3>' + tabTitle + '</h3><input class="inputCss" name="moduleHeight" type="text" class="text" value="" data-el="#'+tabTitle+'" data-css="height"/><a class="up" href="javascript://void();">^</a> <a class="down" href="javascript://void();">v</a> <a class="close" href="javascript://void();">X</a></div><h2 class="zone">New Module</h2><p class="zone" style="top: 100px;">Im in a module!</p></div>');
+		$("#editableArea").append('<div class="module"><div class="tab"><h3>' + tabTitle + '</h3><input class="inputCss" name="moduleHeight" type="text" class="text" value="" data-el="#'+tabTitle+'" data-css="height"/><a class="up" href="javascript://void();">^</a> <a class="down" href="javascript://void();">v</a> <a class="close" href="javascript://void();">X</a></div>');
 		$(".module:last").attr("id", tabTitle);
 		$(".zone:last").css("z-index", "106");
 
