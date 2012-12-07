@@ -22,13 +22,13 @@ h2, p, a { margin: 0; }
 	text-decoration: none;
 }
 #editableArea a.green {
-	background: url('img/arrowGreen.png') no-repeat 0 50%;
+	background: url('/img/arrowGreen.png') no-repeat 0 50%;
 	color: #333;
 	padding: 0 0 0 10px;
 	text-decoration: none;
 }
 #editableArea a.red {
-	background: url('img/arrowRed.png') no-repeat 0 50%;
+	background: url('/img/arrowRed.png') no-repeat 0 50%;
 	color: #333;
 	padding: 0 0 0 10px;
 	text-decoration: none;
@@ -36,12 +36,18 @@ h2, p, a { margin: 0; }
 
 .module {
 	border: 1px solid yellow;
+	border-left: none;
+	border-bottom: none;
+	background: none;
 	height: 300px;
 	position: inherit;
 	width: 100%;
 }
+	.module.activeMod { background: rgba(255,255,0,0.5); }
 	.module .tab {
-		background: yellow;
+		background: #eee;
+		border: 1px solid yellow;
+		border-right: none;
 		position: absolute;
 		width: 90px;
 		height: 110px;
@@ -49,6 +55,7 @@ h2, p, a { margin: 0; }
 		left: -100px;
 		padding: 10px 0 0 10px;
 	}
+		.module.activeMod .tab { background: rgba(255,255,0,0.5); }
 		.tab h3 { display: block; margin: 0; padding: 0; }
 		.tab input { width: 75px; }
 		.tab .up, .tab .down, .tab .close {
