@@ -1,9 +1,11 @@
 body {margin: 0; padding: 0; border: 0;}
 
 /* general styles */
+h2, p, a { margin: 0; }
+
 #editableArea {
 	position: relative;
-	overflow: hidden;
+	overflow: visible;
 	width: 960px;
 	height: 1200px;
 	margin: 0 auto 0 auto;
@@ -11,17 +13,47 @@ body {margin: 0; padding: 0; border: 0;}
 	color: #333;
 	font-family: arial;
 }
+.module {
+	border: 1px solid yellow;
+	height: 300px;
+	position: inherit;
+	width: 100%;
+}
+	.module .tab {
+		background: yellow;
+		position: absolute;
+		width: 90px;
+		height: 110px;
+		top: 0;
+		left: -100px;
+		padding: 10px 0 0 10px;
+	}
+		.tab h3 { display: block; margin: 0; padding: 0; }
+		.tab input { width: 75px; }
+		.tab .up, .tab .down, .tab .close {
+			display: inline-block;
+			background: #333;
+			color: white;
+			width: 8px;
+			padding: 8px;
+			margin: 20px 0 0 0;
+			text-decoration: none;
+		}
+			.tab .up:hover, .tab .down:hover, .tab .close:hover { color: red; }
+
 .zone {
 	position: absolute;
-	padding: 30px;
 }
 
 /* dragging */
 #movInfo {
+	background: rgba(134, 134, 134, .8);
+	font-size: 9px;
+	color: black;
 	position: absolute;
 	display: none;
 	right: 0;
-	top: 0;
+	top: -10px;
 }
 .highlighted { background: rgba(200, 200, 200, .8);}
 .draggable { background: rgba(200, 200, 200, .8); }
@@ -70,11 +102,25 @@ body {margin: 0; padding: 0; border: 0;}
 }
 	#addZone, #removeZone {
 		text-decoration: none;
-		display: inline-block;
+		display: block;
 		padding: 0 10px 0 10px;
+		margin: 0 0 5px 0;
 		line-height: 25px;
 		font-size: 12px;
 		font-weight: bold;
 		background: orange;
+		color: #333;
+	}
+
+	#addModule {
+		text-decoration: none;
+		display: block;
+		width: 121px;
+		padding: 0 10px 0 10px;
+		margin: 0 0 5px 0;
+		line-height: 25px;
+		font-size: 12px;
+		font-weight: bold;
+		background: yellow;
 		color: #333;
 	}
