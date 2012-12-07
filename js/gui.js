@@ -102,7 +102,28 @@ function registerZones(el) {
 			$(".zone").removeClass("draggable").css("z-index","100").attr("contenteditable","false");
 			$(this).addClass("draggable").css("z-index","105").attr("contenteditable","true");
 			$(".draggable").draggit(".draggable");
-			$("#guiActiveZone").show();
+			var targetEl = $(this).attr("data-type");
+			if (targetEl == "normal") {
+				$("#guiActiveZoneLink").fadeOut("slow");
+				$("#guiActiveZoneVideo").fadeOut("slow");
+				$("#guiActiveZone").fadeIn("slow");
+			}
+			if (targetEl == "video") {
+				$("#guiActiveZoneLink").fadeOut("slow");
+				$("#guiActiveZone").fadeOut("slow");
+				$("#guiActiveZoneVideo").fadeIn("slow");
+			} 
+			if (targetEl == "anchor") {
+				$("#guiActiveZone").fadeOut("slow");
+				$("#guiActiveZoneVideo").fadeOut("slow");
+				$("#guiActiveZoneLink").fadeIn("slow");
+			} 
+			if (targetEl == "list") {
+				$("#guiActiveZoneLink").fadeOut("slow");
+				$("#guiActiveZoneVideo").fadeOut("slow");
+				$("#guiActiveZone").fadeIn("slow");
+			} 
+			//$("#guiActiveZone").show();
 
 			//prepare guidebars for this zone
 			$(".zone").addClass("highlighted");
@@ -261,7 +282,7 @@ $(function () {
 	$(".inputLinkSrc").focus(function() {
 		var targetSrc = $(this).attr("data-src");
 		var targetEl = $(this).attr("data-el");
-		$(this).val( $(targetEl).attr("src") );
+		$(this).val( $(targetEl).attr("href") );
 	});
 
 	$(".inputLinkSrc").blur(function() {
@@ -363,18 +384,11 @@ $(function () {
 		currentMod = ("#" + tabTitle);
 	});
 
-	$("#addZone").click(function() {
-		$(currentMod).append('<div class="zone"><h2>new zone</h2><p>lipsum orem.</p></div>');
-		$(currentMod + " .zone:last").css("z-index", "106");
-
-		registerZones($(".zone"));
-	});
-
 	$("#createZone").click(function() {
 		var selectedEl = $('.zoneType:checked').val();
 		
 		if(selectedEl == "normal") {
-			$(currentMod).append('<div class="zone"><h2>new zone</h2><p>lipsum orem.</p></div>');
+			$(currentMod).append('<div class="zone" data-type="normal"><h2>New heading</h2><p>An update to me would be good.</p></div>');
 			$(currentMod + " .zone:last").css("z-index", "106");
 			$("#guiActiveZone").fadeIn('slow');
 			$("#guiActiveZoneVideo").fadeOut('slow');
@@ -383,7 +397,7 @@ $(function () {
 
 		if (selectedEl == "video") {
 			$('div.moving').removeClass("moving");
-			$(currentMod).append('<div class="zone moving" id="insertVideo" data-vidpath="" data-vidwidth="640" data-vidheight="390" data-imgplaceholder="">TEST</div>');
+			$(currentMod).append('<div class="zone moving" id="insertVideo" data-type="video" data-vidpath="" data-vidwidth="640" data-vidheight="390" data-imgplaceholder="">TEST</div>');
 			$(currentMod + " .zone:last").css("z-index", "106");
 			$("#guiActiveZone").fadeOut('slow');
 			$("#guiActiveZoneLink").fadeOut('slow');
@@ -391,7 +405,7 @@ $(function () {
 		}
 
 		if (selectedEl == "anchor") {
-			$(currentMod).append('<a class="zone" src="" rel="">Click here to edit link</a>');
+			$(currentMod).append('<a class="zone" href="" rel="" data-type="anchor">Click here to edit link</a>');
 			$(currentMod + " .zone:last").css("z-index", "106");
 			$("#guiActiveZone").fadeOut('slow');
 			$("#guiActiveZoneLink").fadeIn('slow').css('visibility', 'visible');
@@ -399,7 +413,7 @@ $(function () {
 		}
 
 		if (selectedEl == "heading") {
-			$(currentMod).append('<div class="zone"><h2>new zone</h2></div>');
+			$(currentMod).append('<div class="zone" data-type="normal"><h2>New heading</h2></div>');
 			$(currentMod + " .zone:last").css("z-index", "106");
 			$("#guiActiveZone").fadeIn('slow');
 			$("#guiActiveZoneVideo").fadeOut('slow');
@@ -407,7 +421,7 @@ $(function () {
 		}
 
 		if (selectedEl == "list") {
-			$(currentMod).append('<div class="zone"><ul class=""><li>Edit me</li><li>Edit me</li><li>Edit me</li></ul></div>');
+			$(currentMod).append('<div class="zone" data-type="list"><ul class=""><li>Edit me</li><li>Edit me</li><li>Edit me</li></ul></div>');
 			$(currentMod + " .zone:last").css("z-index", "106");
 			$("#guiActiveZone").fadeIn('slow');
 			$("#guiActiveZoneLink").fadeOut('slow');
