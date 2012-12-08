@@ -14,22 +14,29 @@ h2, p, a { margin: 0; }
 	font-family: arial;
 }
 
+#editorGui fieldset {background: #f1f1f1;}
 
-#editableArea a {color: #333; text-decoration: none;}
-#editableArea a:hover {color: #44B3E1; text-decoration: none; cursor: pointer;}
 
-#editableArea a.orange {
+a {color: #333; text-decoration: none;}
+a:hover {color: #44B3E1; text-decoration: none; cursor: pointer;}
+
+a.orange {
 	background: url('http://store.sony.com/wcsstore/SonyStyleStorefrontAssetStore/img/ss_global/carat_small.png') no-repeat 0 50%;
 	padding: 0 0 0 10px;
 }
-#editableArea a.green {
+a.green {
 	background: url('/img/arrowGreen.png') no-repeat 0 50%;
 	padding: 0 0 0 10px;
 }
-#editableArea a.red {
+a.red {
 	background: url('/img/arrowRed.png') no-repeat 0 50%;
 	padding: 0 0 0 10px;
 }
+
+ul.mod-bullets {display: block; list-style: disc inside none;}
+ul.mod-bullets li {color: #49B2E2; line-height: 18px;}
+ul.mod-bullets li span.list-item {color: #333;}
+
 
 .module {
 	border: 1px solid yellow;
@@ -40,7 +47,7 @@ h2, p, a { margin: 0; }
 	position: inherit;
 	width: 100%;
 }
-	.module.activeMod { background: rgba(255,255,0,0.5); }
+	.module.activeMod { background: rgba(255,255,0,0.3); }
 	.module .tab {
 		background: #eee;
 		border: 1px solid yellow;
@@ -122,18 +129,28 @@ h2, p, a { margin: 0; }
 #editorGui {
 	position: fixed;
 	right: 15px;
-	top: 5%;
+	top: 3%;
 	font-family: arial;
 }
+
+#editorGui h3.first {margin: 8px 0 14px 0;}
+#editorGui h3 {margin: 27px 0 10px 0;}
+#editorGui p {clear: both; margin: 0; padding: 5px 0;}
+#editorGui label {float: left; text-align: right; width: 86px;}
+#editorGui input {float: right; margin: 0 0 0 8px; padding: 2px; width: 148px;}
+
+#editorGui .radioBtn {display: inline-block; float: left; height: 18px; margin: 0 6px 0 0; width: 19px;}
+#editorGui .radioLabel {float: left; text-align: left;}
+
 	#addZone, #createZone, #removeZone {
 		text-decoration: none;
 		display: block;
-		padding: 0 10px 0 10px;
+		padding: 4px 10px 4px 10px;
 		margin: 0 0 5px 0;
 		line-height: 25px;
 		font-size: 12px;
 		font-weight: bold;
-		background: orange;
+		background: #FF7E1F;
 		color: #333;
 	}
 
@@ -145,7 +162,7 @@ h2, p, a { margin: 0; }
 		text-decoration: none;
 		display: block;
 		width: 121px;
-		padding: 0 10px 0 10px;
+		padding: 4px 10px 4px 10px;
 		margin: 0 0 5px 0;
 		line-height: 25px;
 		font-size: 12px;

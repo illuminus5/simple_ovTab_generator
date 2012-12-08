@@ -17,7 +17,7 @@
 		<nav>
 			<form id="editorGui">
 			<fieldset>
-				<h3>Layout Area:</h3>
+				<h3 class="first">Layout Area:</h3>
 				<p>
 					<label for="addBackground">Background</label>
 					<input id="addBackground" name="addBackground" type="text" class="text" value="./img/test_bg.jpg" />
@@ -30,28 +30,29 @@
 					<label for="overallPadding">Padding</label>
 					<input class="inputCss" id="overallPadding" name="overallPadding" type="text" class="text" value="" data-el="#editableArea" data-css="padding"/>
 				</p>
+				<div style="clear:both;"></div>
 				<h3>Create New Module</h3>
 				<p>
 					<a id="addModule" href="javascript://void();">Add Module</a>
 				</p>
 				<h3>Create New Zone</h3>
 				<p id="zoneTypes">
-					<input class="zoneType" id="normal" name="zoneType" type="radio" class="" value="normal"/>
-					<label>Normal</label><br />
-					<input class="zoneType" id="video" name="zoneType" type="radio" class="" value="video"/>
-					<label>Video</label><br />
-					<input class="zoneType" id="anchor" name="zoneType" type="radio" class="" value="anchor"/>
-					<label>Anchor</label><br />
-					<input class="zoneType" id="heading" name="zoneType" type="radio" class="" value="heading"/>
-					<label>Heading</label><br />
-					<input class="zoneType" id="list" name="zoneType" type="radio" class="" value="list"/>
-					<label>Bullet List</label><br /><br />
+					<input class="zoneType radioBtn" id="normal" name="zoneType" type="radio" value="normal"/>
+					<label class="radioLabel">Normal</label><br />
+					<input class="zoneType radioBtn" id="video" name="zoneType" type="radio" value="video"/>
+					<label class="radioLabel">Video</label><br />
+					<input class="zoneType radioBtn" id="anchor" name="zoneType" type="radio" value="anchor"/>
+					<label class="radioLabel">Anchor</label><br />
+					<input class="zoneType radioBtn" id="heading" name="zoneType" type="radio" value="heading"/>
+					<label class="radioLabel">Heading</label><br />
+					<input class="zoneType radioBtn" id="list" name="zoneType" type="radio" value="list"/>
+					<label class="radioLabel">Bullet List</label><br /><br />
 					<a id="createZone" href="javascript://void();">Add new zone</a>
 					<a id="removeZone" href="javascript://void();">Remove  zone</a>
 				</p>
 			</fieldset>
 			<fieldset id="guiActiveZone">
-				<h3>Active Zone:</h3>
+				<h3 class="first">Active Zone:</h3>
 				<p>
 					<label for="currentWidth">Width</label>
 					<input class="inputCss" id="currentWidth" name="currentWidth" type="text" class="text" value="" data-el=".zone.moving" data-css="width"/>
@@ -67,7 +68,7 @@
 				</p>
 			</fieldset>
 			<fieldset id="guiActiveZoneLink">
-				<h3>Active Zone - Link:</h3>
+				<h3 class="first">Active Zone - Link:</h3>
 				<p>
 					<label for="rel">rel</label>
 					<input class="inputLinkRel" id="" name="" type="text" class="text" value="" data-el=".zone.moving" data-rel="rel"/>
@@ -77,12 +78,12 @@
 					<input class="inputLinkSrc" id="" name="" type="text" class="text" value="" data-el=".zone.moving" data-src="href"/>
 				</p>
 				<p>
-					<label for="arrowColor">Class</label>
+					<label for="arrowColor">class</label>
 					<input class="inputArrowColor" id="" name="" type="text" class="text" value="" data-el=".zone.moving" data-src="class"/>
 				</p>
 			</fieldset>
 			<fieldset id="guiActiveZoneVideo">
-				<h3>Active Zone - Video:</h3>
+				<h3 class="first">Active Zone - Video:</h3>
 				<p>
 					<label for="path">path</label>
 					<input class="inputVidPath" id="" name="" type="text" class="text" value="" data-el=".zone.moving" data-vidPath=""/>

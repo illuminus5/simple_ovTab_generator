@@ -157,11 +157,11 @@ function registerZones(el) {
 
 	//allow all content editable elements to self parse thier contents into html
 	$(el).blur( function() {
-		$(this).children().each( function() { $(this).html( $(this).text() ) });
+		$(this).children().each( function() { $(this).not('ul').html( $(this).text() ) });
 	});
 
 	$(el).focus( function() {
-		$(this).children().each( function() { $(this).text( $(this).html() ) });
+		$(this).children().each( function() { $(this).not('ul').text( $(this).html() ) });
 	});
 }
 registerZones( $(".zone") );
@@ -397,8 +397,12 @@ $(function () {
 	});
 
 	$("#createZone").click(function() {
-		var selectedEl = $('.zoneType:checked').val();
+		if ($('.module').length < 1) {
+			$('#addModule').click();
+		}
 		
+		var selectedEl = $('.zoneType:checked').val();
+ 		
 		if(selectedEl == "normal") {
 			$(currentMod).append('<div class="zone" data-type="normal"><h2>New heading</h2><p>An update to me would be good.</p></div>');
 			$(currentMod + " .zone:last").css("z-index", "106");
@@ -433,7 +437,7 @@ $(function () {
 		}
 
 		if (selectedEl == "list") {
-			$(currentMod).append('<div class="zone" data-type="list"><ul class=""><li>Edit me</li><li>Edit me</li><li>Edit me</li></ul></div>');
+			$(currentMod).append('<div class="zone" data-type="list"><ul class="mod-bullets"><li><span class="list-item">Edit me</span></li><li><span class="list-item">Edit me</span></li><li><span class="list-item">Edit me</span></li></ul></div>');
 			$(currentMod + " .zone:last").css("z-index", "106");
 			$("#guiActiveZone").fadeIn('slow');
 			$("#guiActiveZoneLink").fadeOut('slow');
