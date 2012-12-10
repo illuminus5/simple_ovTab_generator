@@ -483,7 +483,7 @@ $("#export").click(function(){
 	$("#exportArea").css("display", "none");
 	$("#exportArea .tab").remove();
 	$("#exportArea #hbars").remove();
-	$("#exportArea #vbards").remove();
+	$("#exportArea #vbars").remove();
 	$("#exportArea div").removeClass("activeMod");
 	$("#exportArea div").removeClass("draggable");
 	$("#exportArea a").removeClass("activeMod");
