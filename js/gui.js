@@ -25,6 +25,10 @@ $(document).keyup(function(event) {
 });
 
 
+$("a").click(function(event) {
+	event.preventDefault();
+});
+
 //
 // register modules, attaching functionality to thier components
 //
