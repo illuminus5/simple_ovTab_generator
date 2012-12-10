@@ -14,7 +14,7 @@ h2, p, a { margin: 0; }
 	font-family: arial;
 }
 
-#editorGui fieldset {background: #f1f1f1;}
+#editorGui fieldset {background: #e1e1e1;}
 
 
 a {color: #333; text-decoration: none;}
@@ -87,10 +87,15 @@ ul.mod-bullets li span.list-item {color: #333;}
 	right: 0;
 	top: -10px;
 }
-.highlighted { background: rgba(200, 200, 200, .8);}
-.draggable { background: rgba(200, 200, 200, .8); }
+.border-highlight {border: 1px solid #03B5E6;}
+.highlighted { 
+	background: url('/img/drag_arrow.png') no-repeat top right transparent;
+	background-color: rgba(200, 200, 200, .8);
+}
+.draggable { background: rgba(200, 200, 200, .8);}
 .moving {
-	background: rgba(134, 134, 134, .8);
+	background: url('/img/drag_arrow.png') no-repeat top right transparent;
+	background-color: rgba(134, 134, 134, .8);
 }
 	.moving #movInfo {
 		display: block;

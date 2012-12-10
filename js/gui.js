@@ -109,7 +109,7 @@ function registerZones(el) {
 			if (targetEl == "normal") {
 				$("#guiActiveZoneLink").fadeOut("slow");
 				$("#guiActiveZoneVideo").fadeOut("slow");
-				$("#guiActiveZone").fadeIn("slow");
+				$("#guiActiveZone").fadeIn('slow');
 			}
 			if (targetEl == "video") {
 				$("#guiActiveZoneLink").fadeOut("slow");
@@ -400,7 +400,7 @@ $(function () {
 		if ($('.module').length < 1) {
 			$('#addModule').click();
 		}
-		
+
 		var selectedEl = $('.zoneType:checked').val();
  		
 		if(selectedEl == "normal") {
