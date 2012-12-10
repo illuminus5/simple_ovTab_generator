@@ -147,7 +147,7 @@ ul.mod-bullets li span.list-item {color: #333;}
 #editorGui .radioBtn {display: inline-block; float: left; height: 18px; margin: 0 6px 0 0; width: 19px;}
 #editorGui .radioLabel {float: left; text-align: left;}
 
-	#addZone, #createZone, #removeZone {
+	#addZone, #createZone, #removeZone, #export, #saveWork {
 		text-decoration: none;
 		display: block;
 		padding: 4px 10px 4px 10px;

@@ -43,7 +43,7 @@ function registerModule(el) {
 		currentMod = "#"+ modID;
 		$(this).addClass("activeMod");
 	});
-	
+
 	$("#"+ modID + " .tab .up").click(function() {
 		var moduleNum = $(this).parent().parent().attr("id");
 		var home = "#" + modID;
@@ -115,17 +115,17 @@ function registerZones(el) {
 				$("#guiActiveZoneLink").fadeOut("slow");
 				$("#guiActiveZone").fadeOut("slow");
 				$("#guiActiveZoneVideo").fadeIn("slow");
-			} 
+			}
 			if (targetEl == "anchor") {
 				$("#guiActiveZone").fadeOut("slow");
 				$("#guiActiveZoneVideo").fadeOut("slow");
 				$("#guiActiveZoneLink").fadeIn("slow");
-			} 
+			}
 			if (targetEl == "list") {
 				$("#guiActiveZoneLink").fadeOut("slow");
 				$("#guiActiveZoneVideo").fadeOut("slow");
 				$("#guiActiveZone").fadeIn("slow");
-			} 
+			}
 			//$("#guiActiveZone").show();
 
 			//prepare guidebars for this zone
@@ -173,8 +173,8 @@ registerZones( $(".zone") );
 //
 // Enhanced dragging function
 //
-// Original code from PlugTrade.com - jQuery draggit Function 
-//  
+// Original code from PlugTrade.com - jQuery draggit Function
+//
 jQuery.fn.draggit = function (el) {
     var thisel = this;
     var thistarget = $(el);
@@ -221,7 +221,7 @@ jQuery.fn.draggit = function (el) {
     }
     setMove(el);
 
-    $(document).bind('mousemove',function(e){ 
+    $(document).bind('mousemove',function(e){
         if(ismousedown)
         {
             var parentPos = $(el).parent().position();
@@ -230,14 +230,14 @@ jQuery.fn.draggit = function (el) {
             var mouseY = e.pageY;
 
             if(relX != undefined || relY != undefined || oldPosX != undefined || oldPosY != undefined) {
-            	var diffX =  mouseX - relX  + oldPosX; 
+            	var diffX =  mouseX - relX  + oldPosX;
 	            var diffY =  mouseY - relY  + oldPosY;
 
 	            // check if we are beyond parent bounds if so, limit
 	            if(diffX < 0 + padLeft)   diffX = 0 + padLeft;
 	            if(diffY < 0 + padTop)   diffY = 0 + padTop;
-	            if(diffX > outBoundsX + padRight ) diffX =  outBoundsX + padRight; 
-	            if(diffY > outBoundsY + padBottom ) diffY =  outBoundsY + padBottom;          
+	            if(diffX > outBoundsX + padRight ) diffX =  outBoundsX + padRight;
+	            if(diffY > outBoundsY + padBottom ) diffY =  outBoundsY + padBottom;
 
 	            $(el).css('left', Math.floor(diffX) );
 	            $(el).css('top',  Math.floor(diffY) );
@@ -271,7 +271,7 @@ $(function () {
 	$(".inputCss").focus(function(){
 		var targetCss = $(this).attr("data-css"); //padding
 		var targetEl  = $(this).attr("data-el");  //.zone.moving
-		$(this).val( $(targetEl).css( targetCss ) ); 
+		$(this).val( $(targetEl).css( targetCss ) );
 	});
 	$(".inputCss").blur(function() {
 		var targetCss = $(this).attr("data-css");
@@ -314,7 +314,7 @@ $(function () {
 		var targetEl = $(this).attr("data-el");
 		$(targetEl).attr("data-vidpath", $(this).val() );
 	});
-	
+
 	$(".inputVidWidth").focus(function() {
 		var targetSrc = $(this).attr("data-vidwidth");
 		var targetEl = $(this).attr("data-el");
@@ -326,7 +326,7 @@ $(function () {
 		var targetEl = $(this).attr("data-el");
 		$(targetEl).attr("data-vidwidth", $(this).val() );
 	});
-	
+
 	$(".inputVidHeight").focus(function() {
 		var targetSrc = $(this).attr("data-vidheight");
 		var targetEl = $(this).attr("data-el");
@@ -374,7 +374,7 @@ $(function () {
 		var targetEl = $(this).attr("data-el"); //.zone.moving
 		$(targetEl).attr( targetSrc, 'zone moving' + ' ' + $(this).val() );
 	});
-	
+
 	//extra function to always cap the editable area to 960px
 	$("#overallPadding").blur(function() {
 		$("#editableArea").outerWidth(960);
@@ -402,7 +402,7 @@ $(function () {
 		}
 
 		var selectedEl = $('.zoneType:checked').val();
- 		
+
 		if(selectedEl == "normal") {
 			$(currentMod).append('<div class="zone" data-type="normal"><h2>New heading</h2><p>An update to me would be good.</p></div>');
 			$(currentMod + " .zone:last").css("z-index", "106");
@@ -448,7 +448,7 @@ $(function () {
 	});
 
 	$("#removeZone").click(function() {
-		$(".zone.moving").remove(); 
+		$(".zone.moving").remove();
 	});
 }); //end: form functionality
 
@@ -465,15 +465,36 @@ $(function () {
             quality: "high",
             allowFullScreen: "true"
 		};
-		
+
         var flashVars = {
         	movieName: $(activeZone).attr("data-vidpath"),
            	autoPlay: "false",
             startNum: "0"
         };
-        
+
         swfobject.embedSWF("http://store.sony.com/wcsstore/SonyStyleStorefrontAssetStore/flashfiles/swfs/video_player_v2.swf", $(activeZone).attr("id"), $(activeZone).attr("data-vidwidth"), $(activeZone).attr("data-vidheight"), "9.0.0", null, flashVars, vidParams);
 	}
+
+
+$("#export").click(function(){
+
+	$("#exportArea").html($("#editableArea").html());
+	$("#exportArea").attr("style", $("#editableArea").attr("style"));
+	$("#exportArea").css("display", "none");
+	$("#exportArea .tab").remove();
+	$("#exportArea #hbars").remove();
+	$("#exportArea #vbards").remove();
+	$("#exportArea div").removeClass("activeMod");
+	$("#exportArea div").removeClass("draggable");
+	$("#exportArea a").removeClass("activeMod");
+	$("#exportArea a").removeClass("draggable");
+	$("#exportArea ul").removeClass("activeMod");
+	$("#exportArea ul").removeClass("draggable");
+	$("#exportArea div.module").css("border", "none");
+	$("#exportArea div.module").css("position", "relative");
+	$("#exportArea div").removeClass("moving");
+	$(".zone").removeAttr("contenteditable");
+});
 
 
 //
