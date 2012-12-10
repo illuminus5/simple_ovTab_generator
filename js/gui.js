@@ -90,11 +90,11 @@ function registerModule(el) {
 function registerZones(el) {
 	//position bars and positional data to element
 	function posBars(el) {
-		$("#movInfo").html("top:" + el.css('top') + " left:" + el.css('left') );
-        $("#hBars").css("height", el.outerHeight()-2 );
-        $("#hBars").css("top", el.position().top);
-        $("#vBars").css("width", el.outerWidth()-2 );
-        $("#vBars").css("left", el.position().left );
+		$(".movInfo").html("top:" + el.css('top') + " left:" + el.css('left') );
+        $(".hBars").css("height", el.outerHeight()-2 );
+        $(".hBars").css("top", el.position().top);
+        $(".vBars").css("width", el.outerWidth()-2 );
+        $(".vBars").css("left", el.position().left );
 	}
 
 	//zones can become draggable, on mouse click
@@ -130,11 +130,11 @@ function registerZones(el) {
 
 			//prepare guidebars for this zone
 			$(".zone").addClass("highlighted");
-			$(this).parent().append( $("#hBars") );
-		    $(this).parent().append( $("#vBars") );
-			$("#hBars").addClass("moving");
-	        $("#vBars").addClass("moving");
-	        $(this).prepend( $("#movInfo") );
+			$(this).parent().append( $(".hBars") );
+		    $(this).parent().append( $(".vBars") );
+			$(".hBars").addClass("moving");
+	        $(".vBars").addClass("moving");
+	        $(this).prepend( $(".movInfo") );
 	        posBars( $(this) );
     	}
 	});
@@ -148,11 +148,11 @@ function registerZones(el) {
 	});
 
 	$(el).mouseup( function() {
-		$("#editorGui").append( $("#movInfo").empty() );
+		$("#editorGui").append( $(".movInfo").empty() );
 		$(".zone").removeClass("draggable").css("z-index","100");
 		$(".zone").removeClass("highlighted");
-		$("#hBars").removeClass("moving");
-        $("#vBars").removeClass("moving");
+		$(".hBars").removeClass("moving");
+        $(".vBars").removeClass("moving");
 	});
 
 	//allow all content editable elements to self parse thier contents into html
@@ -486,8 +486,9 @@ $("#export").click(function(){
 	$("#exportArea").attr("style", $("#editableArea").attr("style"));
 	$("#exportArea").css("display", "none");
 	$("#exportArea .tab").remove();
-	$("#exportArea #hbars").remove();
-	$("#exportArea #vbars").remove();
+
+	$("#exportArea .hbars").remove();
+	$("#exportArea .vbards").remove();
 	$("#exportArea div").removeClass("activeMod");
 	$("#exportArea div").removeClass("draggable");
 	$("#exportArea a").removeClass("activeMod");
