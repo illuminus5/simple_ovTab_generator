@@ -4,7 +4,7 @@
 	    <meta charset="utf-8">
 	    <title>Simple Overview Tab Generator</title>
 		<link rel="stylesheet" href="./css/ovTabGen.css"/>
-		
+
 		<!-- JS - Test: Video Mod -->
 		<script type="text/javascript" src="http://store.sony.com/wcsstore/SonyStyleStorefrontAssetStore/javascript/swfobject2.js"></script>
 	</head>
@@ -49,6 +49,11 @@
 					<label class="radioLabel">Bullet List</label><br /><br />
 					<a id="createZone" href="javascript://void();">Add new zone</a>
 					<a id="removeZone" href="javascript://void();">Remove  zone</a>
+				</p>
+				<h3>Export & Save</h3>
+				<p>
+					<a id="export" href="javascript://void();">Export CMSpot</a>
+					<!--<a id="saveWork" href="javascript://void();">Save Content</a>-->
 				</p>
 			</fieldset>
 			<fieldset id="guiActiveZone">
@@ -101,7 +106,7 @@
 					<input class="inputVidPlaceHolder" id="" name="" type="text" class="text" value="" data-el=".zone.moving" data-imgPlaceHolder=""/>
 				</p>
 				<input class="inputVidSubmit" id="" name="" type="button" value="Submit"/>
-				
+
 			</fieldset>
 			</form><!-- /editorGui -->
 
@@ -109,6 +114,11 @@
 			<div id="vBars"></div>
 			<div id="movInfo"></div>
 		</nav>
+
+		<div id="exportArea" style="display:none;">
+		</div>
+
+
 	</body>
 </html>
 
