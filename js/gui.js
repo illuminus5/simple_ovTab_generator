@@ -354,8 +354,8 @@ $(function () {
 		var targetEl = $(this).attr("data-el");
 		$(targetEl).attr( "data-imgplaceholder", $(this).val() );
 	});
-	
-	
+
+
 	$(".inputVidSubmit").click(function(){
 		$(".zone.moving").removeClass("placeholderImg");
 		insertVideoParams($(".zone.moving"));
@@ -418,7 +418,7 @@ $(function () {
 		}
 
 		if (selectedEl == "video") {
-			$(currentMod).append('<div class="zone placeholderImg" data-vidpath="" data-vidwidth="640" data-vidheight="390" data-imgplaceholder=""><div id="insertVideo" class="innerVidZone"></div></div>');
+			$(currentMod).append('<div class="zone placeholderImg vidZone" data-vidpath="" data-vidwidth="640" data-vidheight="390" data-imgplaceholder=""><div id="insertVideo" class="innerVidZone"></div></div>');
 			$(currentMod + " .zone:last").css("z-index", "106");
 			$("#guiActiveZone").fadeOut('slow');
 			$("#guiActiveZoneLink").fadeOut('slow');
@@ -479,8 +479,8 @@ $(function () {
            	autoPlay: "false",
             startNum: "0"
         };
-       
-        swfobject.embedSWF("http://store.sony.com/wcsstore/SonyStyleStorefrontAssetStore/flashfiles/swfs/video_player_v2.swf", $(".zone.moving div").attr("id"), $(activeVidZone).attr("data-vidwidth"), $(activeVidZone).attr("data-vidheight"), "9.0.0", null, flashVars, vidParams);              
+
+        swfobject.embedSWF("http://store.sony.com/wcsstore/SonyStyleStorefrontAssetStore/flashfiles/swfs/video_player_v2.swf", $(".zone.moving div").attr("id"), $(activeVidZone).attr("data-vidwidth"), $(activeVidZone).attr("data-vidheight"), "9.0.0", null, flashVars, vidParams);
 	}
 
 
@@ -502,8 +502,27 @@ $("#export").click(function(){
 	$("#exportArea ul").removeClass("draggable");
 	$("#exportArea div.module").css("border", "none");
 	$("#exportArea div.module").css("position", "relative");
-	$("#exportArea div").removeClass("moving");
+
 	$(".zone").removeAttr("contenteditable");
+
+
+	$("#exportArea .vidZone").each(function(){
+		// go through each vidzone and write the script tags to the source
+		// Empty the inner section first
+		$(this).html("<div id=\"insertVideo\" class=\"innerVidZone\"></div>");
+		// Now create the script
+		var scriptTags = "<script>var vidParams = { allowScriptAccess: \"always\", scale: \"noscale\", wmode: \"transparent\", bgcolor: \"#000000\", quality: \"high\", allowFullScreen: \"true\" };"
+		scriptTags += "var flashVars = { movieName: \""+ $(this).attr("data-vidpath") +"\",autoPlay: \"false\",startNum: \"0\" };"
+        scriptTags += "swfobject.embedSWF(\"http://store.sony.com/wcsstore/SonyStyleStorefrontAssetStore/flashfiles/swfs/video_player_v2.swf\", \"insertVideo\", " + $(this).attr("data-vidwidth") +", "+$(this).attr("data-vidheight")+", \"9.0.0\", null, flashVars, vidParams);</script>";
+		$(this).html($(this).html() + scriptTags);
+		$(this).removeAttr("data-vidwidth");
+		$(this).removeAttr("data-vidheight");
+		$(this).removeAttr("data-vidpath");
+		$(this).removeAttr("data-imgplaceholder");
+
+	});
+
+	$("#exportArea div").removeClass("moving");
 });
 
 
