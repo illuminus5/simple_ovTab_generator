@@ -94,11 +94,11 @@ function registerModule(el) {
 function registerZones(el) {
 	//position bars and positional data to element
 	function posBars(el) {
-		$("#movInfo").html("top:" + el.css('top') + " left:" + el.css('left') );
-        $("#hBars").css("height", el.outerHeight()-2 );
-        $("#hBars").css("top", el.position().top);
-        $("#vBars").css("width", el.outerWidth()-2 );
-        $("#vBars").css("left", el.position().left );
+		$(".movInfo").html("top:" + el.css('top') + " left:" + el.css('left') );
+        $(".hBars").css("height", el.outerHeight()-2 );
+        $(".hBars").css("top", el.position().top);
+        $(".vBars").css("width", el.outerWidth()-2 );
+        $(".vBars").css("left", el.position().left );
 	}
 
 	//zones can become draggable, on mouse click
@@ -134,11 +134,11 @@ function registerZones(el) {
 
 			//prepare guidebars for this zone
 			$(".zone").addClass("highlighted");
-			$(this).parent().append( $("#hBars") );
-		    $(this).parent().append( $("#vBars") );
-			$("#hBars").addClass("moving");
-	        $("#vBars").addClass("moving");
-	        $(this).prepend( $("#movInfo") );
+			$(this).parent().append( $(".hBars") );
+		    $(this).parent().append( $(".vBars") );
+			$(".hBars").addClass("moving");
+	        $(".vBars").addClass("moving");
+	        $(this).prepend( $(".movInfo") );
 	        posBars( $(this) );
     	}
 	});
@@ -152,11 +152,11 @@ function registerZones(el) {
 	});
 
 	$(el).mouseup( function() {
-		$("#editorGui").append( $("#movInfo").empty() );
+		$("#editorGui").append( $(".movInfo").empty() );
 		$(".zone").removeClass("draggable").css("z-index","100");
 		$(".zone").removeClass("highlighted");
-		$("#hBars").removeClass("moving");
-        $("#vBars").removeClass("moving");
+		$(".hBars").removeClass("moving");
+        $(".vBars").removeClass("moving");
 	});
 
 	//allow all content editable elements to self parse thier contents into html
@@ -354,8 +354,10 @@ $(function () {
 		var targetEl = $(this).attr("data-el");
 		$(targetEl).attr( "data-imgplaceholder", $(this).val() );
 	});
-
+	
+	
 	$(".inputVidSubmit").click(function(){
+		$(".zone.moving").removeClass("placeholderImg");
 		insertVideoParams($(".zone.moving"));
 	});
 
@@ -416,8 +418,7 @@ $(function () {
 		}
 
 		if (selectedEl == "video") {
-			$('div.moving').removeClass("moving");
-			$(currentMod).append('<div class="zone moving" id="insertVideo" data-type="video" data-vidpath="" data-vidwidth="640" data-vidheight="390" data-imgplaceholder="">TEST</div>');
+			$(currentMod).append('<div class="zone placeholderImg" data-vidpath="" data-vidwidth="640" data-vidheight="390" data-imgplaceholder=""><div id="insertVideo" class="innerVidZone"></div></div>');
 			$(currentMod + " .zone:last").css("z-index", "106");
 			$("#guiActiveZone").fadeOut('slow');
 			$("#guiActiveZoneLink").fadeOut('slow');
@@ -460,7 +461,10 @@ $(function () {
 //
 // Set Video Params
 //
-	function insertVideoParams(activeZone) {
+	function insertVideoParams(activeVidZone) {
+
+		$(activeVidZone).css("background-image", "url(" + $(activeVidZone).attr("data-imgplaceholder") +")");
+		$(activeVidZone).css('background-repeat', 'no-repeat');
 		var vidParams = {
             allowScriptAccess: "always",
             scale: "noscale",
@@ -471,12 +475,12 @@ $(function () {
 		};
 
         var flashVars = {
-        	movieName: $(activeZone).attr("data-vidpath"),
+        	movieName: $(activeVidZone).attr("data-vidpath"),
            	autoPlay: "false",
             startNum: "0"
         };
-
-        swfobject.embedSWF("http://store.sony.com/wcsstore/SonyStyleStorefrontAssetStore/flashfiles/swfs/video_player_v2.swf", $(activeZone).attr("id"), $(activeZone).attr("data-vidwidth"), $(activeZone).attr("data-vidheight"), "9.0.0", null, flashVars, vidParams);
+       
+        swfobject.embedSWF("http://store.sony.com/wcsstore/SonyStyleStorefrontAssetStore/flashfiles/swfs/video_player_v2.swf", $(".zone.moving div").attr("id"), $(activeVidZone).attr("data-vidwidth"), $(activeVidZone).attr("data-vidheight"), "9.0.0", null, flashVars, vidParams);              
 	}
 
 
@@ -488,6 +492,8 @@ $("#export").click(function(){
 	$("#exportArea .tab").remove();
 	$("#exportArea #hbars").remove();
 	$("#exportArea #vbars").remove();
+	$("#exportArea .hbars").remove();
+	$("#exportArea .vbards").remove();
 	$("#exportArea div").removeClass("activeMod");
 	$("#exportArea div").removeClass("draggable");
 	$("#exportArea a").removeClass("activeMod");
