@@ -170,3 +170,9 @@ ul.mod-bullets li span.list-item {color: #333;}
 		background: yellow;
 		color: #333;
 	}
+	
+/* video zone defaults */
+.placeholderImg {
+	width: 640px; height: 390px;
+	background: url('../img/vidPlaceHolder.jpg') no-repeat 0 0 transparent;
+}

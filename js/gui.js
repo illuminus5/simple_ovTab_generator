@@ -350,8 +350,10 @@ $(function () {
 		var targetEl = $(this).attr("data-el");
 		$(targetEl).attr( "data-imgplaceholder", $(this).val() );
 	});
-
+	
+	
 	$(".inputVidSubmit").click(function(){
+		$(".zone.moving").removeClass("placeholderImg");
 		insertVideoParams($(".zone.moving"));
 	});
 
@@ -412,8 +414,7 @@ $(function () {
 		}
 
 		if (selectedEl == "video") {
-			$('div.moving').removeClass("moving");
-			$(currentMod).append('<div class="zone moving" id="insertVideo" data-type="video" data-vidpath="" data-vidwidth="640" data-vidheight="390" data-imgplaceholder="">TEST</div>');
+			$(currentMod).append('<div class="zone placeholderImg" data-vidpath="" data-vidwidth="640" data-vidheight="390" data-imgplaceholder=""><div id="insertVideo" class="innerVidZone"></div></div>');
 			$(currentMod + " .zone:last").css("z-index", "106");
 			$("#guiActiveZone").fadeOut('slow');
 			$("#guiActiveZoneLink").fadeOut('slow');
@@ -456,7 +457,10 @@ $(function () {
 //
 // Set Video Params
 //
-	function insertVideoParams(activeZone) {
+	function insertVideoParams(activeVidZone) {
+
+		$(activeVidZone).css("background-image", "url(" + $(activeVidZone).attr("data-imgplaceholder") +")");
+		$(activeVidZone).css('background-repeat', 'no-repeat');
 		var vidParams = {
             allowScriptAccess: "always",
             scale: "noscale",
@@ -467,12 +471,12 @@ $(function () {
 		};
 
         var flashVars = {
-        	movieName: $(activeZone).attr("data-vidpath"),
+        	movieName: $(activeVidZone).attr("data-vidpath"),
            	autoPlay: "false",
             startNum: "0"
         };
-
-        swfobject.embedSWF("http://store.sony.com/wcsstore/SonyStyleStorefrontAssetStore/flashfiles/swfs/video_player_v2.swf", $(activeZone).attr("id"), $(activeZone).attr("data-vidwidth"), $(activeZone).attr("data-vidheight"), "9.0.0", null, flashVars, vidParams);
+       
+        swfobject.embedSWF("http://store.sony.com/wcsstore/SonyStyleStorefrontAssetStore/flashfiles/swfs/video_player_v2.swf", $(".zone.moving div").attr("id"), $(activeVidZone).attr("data-vidwidth"), $(activeVidZone).attr("data-vidheight"), "9.0.0", null, flashVars, vidParams);              
 	}
 
 
