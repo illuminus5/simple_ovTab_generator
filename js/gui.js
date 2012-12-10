@@ -493,6 +493,7 @@ $("#export").click(function(){
 	$("#exportArea div.module").css("border", "none");
 	$("#exportArea div.module").css("position", "relative");
 	$("#exportArea div").removeClass("moving");
+	$(".zone").removeAttr("contenteditable");
 });
 
 
