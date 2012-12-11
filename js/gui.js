@@ -502,10 +502,9 @@ $("#export").click(function(){
 	$("#exportArea").attr("style", $("#editableArea").attr("style"));
 	$("#exportArea").css("display", "none");
 	$("#exportArea .tab").remove();
-	$("#exportArea #hbars").remove();
-	$("#exportArea #vbars").remove();
-	$("#exportArea .hbars").remove();
-	$("#exportArea .vbards").remove();
+
+	$("#exportArea .hBars").remove();
+	$("#exportArea .vBars").remove();
 	$("#exportArea div").removeClass("activeMod");
 	$("#exportArea div").removeClass("draggable");
 	$("#exportArea a").removeClass("activeMod");
@@ -518,15 +517,22 @@ $("#export").click(function(){
 	$(".zone").removeAttr("contenteditable");
 
 
+
 	$("#exportArea .vidZone").each(function(){
 		// go through each vidzone and write the script tags to the source
 		// Empty the inner section first
+/*
 		$(this).html("<div id=\"insertVideo\" class=\"innerVidZone\"></div>");
-		// Now create the script
-		var scriptTags = "<script>var vidParams = { allowScriptAccess: \"always\", scale: \"noscale\", wmode: \"transparent\", bgcolor: \"#000000\", quality: \"high\", allowFullScreen: \"true\" };"
+		var scriptTags = "var vidParams = { allowScriptAccess: \"always\", scale: \"noscale\", wmode: \"transparent\", bgcolor: \"#000000\", quality: \"high\", allowFullScreen: \"true\" };"
 		scriptTags += "var flashVars = { movieName: \""+ $(this).attr("data-vidpath") +"\",autoPlay: \"false\",startNum: \"0\" };"
-        scriptTags += "swfobject.embedSWF(\"http://store.sony.com/wcsstore/SonyStyleStorefrontAssetStore/flashfiles/swfs/video_player_v2.swf\", \"insertVideo\", " + $(this).attr("data-vidwidth") +", "+$(this).attr("data-vidheight")+", \"9.0.0\", null, flashVars, vidParams);</script>";
-		$(this).html($(this).html() + scriptTags);
+        scriptTags += "swfobject.embedSWF(\"http://store.sony.com/wcsstore/SonyStyleStorefrontAssetStore/flashfiles/swfs/video_player_v2.swf\", \"insertVideo\", " + $(this).attr("data-vidwidth") +", "+$(this).attr("data-vidheight")+", \"9.0.0\", null, flashVars, vidParams);";
+
+var newScript = document.createElement('script');
+newScript.setAttribute('type', 'text/javascript');
+var textNode = document.createTextNode(scriptTe);
+newScript.appendChild(textNode);
+document.getElementsByTagName('head')[0].appendChild(newScript);
+*/
 		$(this).removeAttr("data-vidwidth");
 		$(this).removeAttr("data-vidheight");
 		$(this).removeAttr("data-vidpath");
