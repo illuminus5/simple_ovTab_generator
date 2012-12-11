@@ -25,6 +25,10 @@ $(document).keyup(function(event) {
 });
 
 
+$("a").click(function(event) {
+	event.preventDefault();
+});
+
 //
 // register modules, attaching functionality to thier components
 //
@@ -109,7 +113,7 @@ function registerZones(el) {
 			if (targetEl == "normal") {
 				$("#guiActiveZoneLink").fadeOut("slow");
 				$("#guiActiveZoneVideo").fadeOut("slow");
-				$("#guiActiveZone").fadeIn("slow");
+				$("#guiActiveZone").fadeIn('slow');
 			}
 			if (targetEl == "video") {
 				$("#guiActiveZoneLink").fadeOut("slow");
