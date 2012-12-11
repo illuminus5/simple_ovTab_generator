@@ -442,7 +442,19 @@ $(function () {
 		}
 
 		if (selectedEl == "list") {
-			$(currentMod).append('<div class="zone" data-type="list"><ul class="mod-bullets"><li><span class="list-item">Edit me</span></li><li><span class="list-item">Edit me</span></li><li><span class="list-item">Edit me</span></li></ul></div>');
+			$(currentMod).append('<div class="zone" data-type="list"><ul class="mod-bullets"></ul></div>');
+			var totalListItems = $('#totalListItems').val();
+			var j = 0;
+			if (isNaN(totalListItems) || totalListItems == "" || totalListItems == null) {
+				$("#listError").fadeIn('slow');
+			} else {
+				do {
+					$(".mod-bullets").append( $('<li><span class="list-item">Edit me</span></li>') );
+					j++;
+				} while (j < totalListItems);
+				$("#listError").fadeOut('slow');
+			}
+
 			$(currentMod + " .zone:last").css("z-index", "106");
 			$("#guiActiveZone").fadeIn('slow');
 			$("#guiActiveZoneLink").fadeOut('slow');
