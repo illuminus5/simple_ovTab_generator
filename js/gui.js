@@ -530,7 +530,7 @@ document.getElementsByTagName('head')[0].appendChild(newScript);
 
 	$("#exportArea div").removeClass("moving");
 	var print = $("#printExport");
-	print.text($("#printExport").html()).dialog({modal: true, resizeable: true, minWidth: 500});
+	print.text($("#printExport").html()).dialog({modal: true, resizeable: true, minWidth: 800});
 
 });
 
