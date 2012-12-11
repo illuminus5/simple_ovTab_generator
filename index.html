@@ -3,6 +3,7 @@
 	<head>
 	    <meta charset="utf-8">
 	    <title>Simple Overview Tab Generator</title>
+	     <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
 		<link rel="stylesheet" href="./css/ovTabGen.css"/>
 
 		<!-- JS - Test: Video Mod -->
@@ -106,7 +107,7 @@
 					<input class="inputVidPlaceHolder" id="" name="" type="text" class="text" value="" data-el=".zone.moving" data-imgPlaceHolder=""/>
 				</p>
 				<input class="inputVidSubmit" id="" name="" type="button" value="Submit"/>
-				
+
 			</fieldset>
 
 			</form><!-- /editorGui -->
@@ -115,14 +116,15 @@
 			<div class="vBars"></div>
 			<div class="movInfo"></div>
 		</nav>
-
-		<div id="exportArea" style="display:none;">
+		<div id="printExport">
+			<div id="exportArea" style="display:none;">
+			</div>
 		</div>
-
 
 	</body>
 </html>
 
 
 <script src="./js/jquery-1.8.2.min.js"></script>
+<script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 <script src="./js/gui.js"></script>
