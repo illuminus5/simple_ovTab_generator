@@ -467,6 +467,10 @@ $(function () {
 	$("#removeZone").click(function() {
 		$(".zone.moving").remove();
 	});
+
+	$("#totalListItems").focus(function() {
+		$("#list").click();
+	});
 }); //end: form functionality
 
 

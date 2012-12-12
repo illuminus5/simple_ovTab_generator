@@ -35,7 +35,7 @@ a.red {
 
 #totalListItems {width: 25px !important; padding: 2px;}
 #listError {display: none; color: #ED2024; font-size: 15px; font-style: italic;}
-ul.mod-bullets {display: block; list-style: disc inside none;}
+ul.mod-bullets {display: block; list-style: disc outside none;}
 ul.mod-bullets li {color: #49B2E2; line-height: 18px;}
 ul.mod-bullets li span.list-item {color: #333;}
 
