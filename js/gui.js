@@ -171,9 +171,6 @@ function registerZones(el) {
 registerZones( $(".zone") );
 
 
-
-
-
 //
 // Enhanced dragging function
 //
@@ -410,7 +407,7 @@ $(function () {
 		var selectedEl = $('.zoneType:checked').val();
 
 		if(selectedEl == "normal") {
-			$(currentMod).append('<div class="zone" data-type="normal"><h2>New heading</h2><p>An update to me would be good.</p></div>');
+			$(currentMod).append('<div class="zone" data-type="normal"><h2>New heading</h2><p>Lorem ipsum dolor sit amet.</p></div>');
 			$(currentMod + " .zone:last").css("z-index", "106");
 			$("#guiActiveZone").fadeIn('slow');
 			$("#guiActiveZoneVideo").fadeOut('slow');
@@ -449,7 +446,7 @@ $(function () {
 				$("#listError").fadeIn('slow');
 			} else {
 				do {
-					$(".mod-bullets").append( $('<li><span class="list-item">Edit me</span></li>') );
+					$(".mod-bullets").append( $('<li><span class="list-item">Lorem ipsum dolor sit amet</span></li>') );
 					j++;
 				} while (j < totalListItems);
 				$("#listError").fadeOut('slow');
