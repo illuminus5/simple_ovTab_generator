@@ -193,6 +193,7 @@ jQuery.fn.draggit = function (el) {
     thistarget.css('position','absolute');
 
     thisel.bind('mousedown', function(e){
+		window.scrollTo(0, $(el).offset().top);
         setMove(e);
     });
 
