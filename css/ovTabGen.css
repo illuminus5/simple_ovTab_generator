@@ -79,6 +79,8 @@ ul.mod-bullets li span.list-item {color: #333;}
 	position: absolute;
 }
 
+.zone p {font-size: 12px; line-height: 18px;}
+
 /* dragging */
 .movInfo {
 	background: rgba(134, 134, 134, .8);

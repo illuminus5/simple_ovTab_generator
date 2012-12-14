@@ -414,6 +414,14 @@ $(function () {
 			$("#guiActiveZoneLink").fadeOut('slow');
 		}
 
+		if(selectedEl == "paragraph") {
+			$(currentMod).append('<div class="zone" data-type="normal"><p>Lorem ipsum dolor sit amet.</p></div>');
+			$(currentMod + " .zone:last").css("z-index", "106");
+			$("#guiActiveZone").fadeIn('slow');
+			$("#guiActiveZoneVideo").fadeOut('slow');
+			$("#guiActiveZoneLink").fadeOut('slow');
+		}
+
 		if (selectedEl == "video") {
 			$(currentMod).append('<div class="zone placeholderImg vidZone" data-vidpath="" data-vidwidth="640" data-vidheight="390" data-imgplaceholder=""><div id="insertVideo" class="innerVidZone"></div></div>');
 			$(currentMod + " .zone:last").css("z-index", "106");
