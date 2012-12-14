@@ -81,13 +81,14 @@ ul.mod-bullets li span.list-item {color: #333;}
 
 /* dragging */
 .movInfo {
-	background: rgba(134, 134, 134, .8);
+	/*background: rgba(134, 134, 134, .8);
 	font-size: 9px;
 	color: black;
 	position: absolute;
 	display: none;
 	right: 0;
 	top: -10px;
+*/
 }
 .border-highlight {border: 1px solid #03B5E6;}
 .highlighted { 
